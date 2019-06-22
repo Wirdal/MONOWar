@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MONOWar", "MONOWar\MONOWar.csproj", "{7E9025DE-371C-45F3-A41E-F076200DDDED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E9025DE-371C-45F3-A41E-F076200DDDED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E9025DE-371C-45F3-A41E-F076200DDDED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E9025DE-371C-45F3-A41E-F076200DDDED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E9025DE-371C-45F3-A41E-F076200DDDED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B73D36D6-070D-4EDA-9E74-1B45C5B55845}
+	EndGlobalSection
+EndGlobal
