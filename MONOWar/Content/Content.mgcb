@@ -25,3 +25,10 @@
 /processorParam:TextureFormat=Color
 /build:Backdrops/Test.png
 
+#begin Fonts/Test.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Test.spritefont;Fonts/Test.spritefont
+

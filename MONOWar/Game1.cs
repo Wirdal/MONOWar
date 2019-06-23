@@ -12,6 +12,7 @@ namespace MONOWar
         readonly GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D CurrentBackdrop;
+        SpriteFont Arial12;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -41,6 +42,7 @@ namespace MONOWar
             // TODO: use this.Content to load your game content here
             spriteBatch = new SpriteBatch(GraphicsDevice);
             CurrentBackdrop = Content.Load<Texture2D>("Backdrops/Test");
+            Arial12 = Content.Load<SpriteFont>("Fonts/Test");
         }
 
         /// <summary>
@@ -75,6 +77,7 @@ namespace MONOWar
         {
             spriteBatch.Begin();
             spriteBatch.Draw(CurrentBackdrop, new Rectangle(0, 0, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+            spriteBatch.DrawString(Arial12, "Hello World!", new Vector2(50, 50), Color.Black);
             spriteBatch.End();
             // TODO: Add your drawing code here
             base.Draw(gameTime);
