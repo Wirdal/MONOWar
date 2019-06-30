@@ -4,19 +4,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MONOWar
 {
-    enum GameStates{
-        Loading = 0,
-        MainMenu,
-    }
+
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game
     {
-        readonly GraphicsDeviceManager graphics;
+        GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D CurrentBackdrop;
-        int GameState;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -32,6 +28,11 @@ namespace MONOWar
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            // Let's create the main menu screen here
+            GameStateManager.Instance.SetContent(Content);
+            GameStateManager.Instance.gameInstance = this;
+            MainMenu mainScreen = new MainMenu(graphics.GraphicsDevice);
+            GameStateManager.Instance.AddScreen(mainScreen);
             base.Initialize();
         }
 
@@ -44,7 +45,6 @@ namespace MONOWar
             // Create a new SpriteBatch, which can be used to draw textures.
             // TODO: use this.Content to load your game content here
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            CurrentBackdrop = Content.Load<Texture2D>("Backdrops/Test");
         }
 
         /// <summary>
@@ -54,6 +54,7 @@ namespace MONOWar
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            GameStateManager.Instance.UnloadContent();
         }
 
         /// <summary>
@@ -63,9 +64,7 @@ namespace MONOWar
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
+            GameStateManager.Instance.Update(gameTime);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -77,12 +76,9 @@ namespace MONOWar
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            MainMenuButton first = new MainMenuButton(this, spriteBatch, 50, 50);
-            spriteBatch.Begin();
-            spriteBatch.Draw(CurrentBackdrop, new Rectangle(0, 0, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
-            first.Draw(gameTime);
-            spriteBatch.End();
+
             // TODO: Add your drawing code here
+            GameStateManager.Instance.Draw(spriteBatch);
             base.Draw(gameTime);
         }
     }

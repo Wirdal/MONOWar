@@ -4,33 +4,40 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MONOWar
 {
-    public class MainMenuButton : DrawableGameComponent
+    class MainMenuButton : DrawableGameComponent
     {
-        Game game;
-        SpriteBatch spriteBatch;
-        Texture2D RedRect;
-        int Xpos, Ypos;
-        public MainMenuButton(Game game, SpriteBatch spriteBatch, int xpos, int ypos) : base(game)
+        Texture2D testTexture;
+
+        int xpos, ypos;
+        public MainMenuButton(Game game, int xpos, int ypos) : base(game)
         {
-            this.spriteBatch = spriteBatch;
-            this.game = game;
-            this.Xpos = xpos;
-            this.Ypos = ypos;
-            game.Content.RootDirectory = "Content";
-            LoadContent();
+            this.xpos = xpos;
+            this.ypos = ypos;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+
+            spriteBatch.Begin();
+            spriteBatch.Draw(testTexture, new Vector2(xpos, ypos), Color.White); // Draw it as a rectangle, so it gets bigger when update is called
+            spriteBatch.End();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
         }
 
         protected override void LoadContent()
         {
-            RedRect = game.Content.Load<Texture2D>("RedBlock");
+            // Could need to bring this out a level. Or just use an enum or something
+            testTexture = Game.Content.Load<Texture2D>("RedBlock");
             base.LoadContent();
         }
-        public override void Draw(GameTime gameTime)
-        {
-            System.Console.WriteLine("Test");
-            spriteBatch.Draw(RedRect, new Vector2(Xpos, Ypos), Color.White);
-            base.Draw(gameTime);
-        }
-        
     }
 }

@@ -1,30 +1,86 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace MONOWar
 {
-    // Enumerate the game states, so we know exactly what we're doing, and so we know what to update
-    enum GameStates
+    //NO exception handling here. May need to add them for later
+    class GameStateManager
     {
-        InitialLoading = 0,
-        MainMenu,
-
-    }
-    class GameStateManager : GameComponent
-    {
-        public GameStateManager(Game game) : base(game)
+        // Singleton pattern
+        private static GameStateManager instance;
+        public GameTime gameTime;
+        // Going to store the game states within a stack
+        private Stack<GameState> screens = new Stack<GameState>();
+        private  ContentManager content
         {
+            get; set;
         }
 
-        public override void Initialize()
+        public Game gameInstance
         {
-            base.Initialize();
+            get; set;
+        }
+        // Also a field, because I don't think I can pass it around too much
+        public static GameStateManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GameStateManager();
+                }
+                return instance;
+            }
+        }
+        public void SetContent(ContentManager content)
+        {
+            this.content = content;
+        }
+        public void AddScreen(GameState screen)
+        {
+            screens.Push(screen); // I didn't do the initializing and loading of the gamestate here like the tutorial did. might need it
+            screens.Peek().LoadContent(content); //Pass it the content manager
+        }
+        public void RemoveScreen()
+        {
+            if (screens.Count() > 0)
+            {
+                screens.Pop();
+            }
+        }
+        public void ClearScreens()
+        {
+            while (screens.Count() > 0)
+            {
+                screens.Pop();
+            }
         }
 
-        public override void Update(GameTime gameTime)
+        // Update top screen
+        public void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
+            if (screens.Count() > 0)
+            {
+                screens.Peek().Update(gameTime);
+            }
         }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (screens.Count() > 0)
+            {
+                screens.Peek().Draw(spriteBatch);
+            }
+        }
+        public void UnloadContent()
+        {
+            foreach(GameState screen in screens)
+            {
+                screen.UnloadContent();
+            }
+        }
+
     }
 }
