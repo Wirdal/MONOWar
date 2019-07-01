@@ -30,7 +30,8 @@ namespace MONOWar
             // TODO: Add your initialization logic here
             // Let's create the main menu screen here
             GameStateManager.Instance.SetContent(Content);
-            GameStateManager.Instance.gameInstance = this;
+            GameStateManager.Instance.GameInstance = this;
+            IsMouseVisible = true;
             MainMenu mainScreen = new MainMenu(graphics.GraphicsDevice);
             GameStateManager.Instance.AddScreen(mainScreen);
             base.Initialize();

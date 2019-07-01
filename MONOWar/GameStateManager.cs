@@ -11,15 +11,14 @@ namespace MONOWar
     {
         // Singleton pattern
         private static GameStateManager instance;
-        public GameTime gameTime;
         // Going to store the game states within a stack
         private Stack<GameState> screens = new Stack<GameState>();
-        private  ContentManager content
+        private  ContentManager Content
         {
             get; set;
         }
 
-        public Game gameInstance
+        public Game GameInstance
         {
             get; set;
         }
@@ -37,12 +36,12 @@ namespace MONOWar
         }
         public void SetContent(ContentManager content)
         {
-            this.content = content;
+            this.Content = content;
         }
         public void AddScreen(GameState screen)
         {
             screens.Push(screen); // I didn't do the initializing and loading of the gamestate here like the tutorial did. might need it
-            screens.Peek().LoadContent(content); //Pass it the content manager
+            screens.Peek().LoadContent(Content); //Pass it the content manager
         }
         public void RemoveScreen()
         {

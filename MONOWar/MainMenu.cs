@@ -8,11 +8,11 @@ namespace MONOWar
 {
     public class MainMenu : GameState
     {
-        MainMenuButton testButton;
+        MainMenuButton startButton;
         Texture2D CurrentBackdrop;
         public MainMenu(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
-            testButton = new MainMenuButton(GameStateManager.Instance.gameInstance, 150, 150);
+            startButton = new MainMenuButton(GameStateManager.Instance.GameInstance, 150, 150, 1);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -22,7 +22,7 @@ namespace MONOWar
             spriteBatch.Draw(CurrentBackdrop, new Rectangle(0, 0, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
             spriteBatch.End();
             // Draw the buttons afterwards
-            testButton.Draw(spriteBatch);
+            startButton.Draw(spriteBatch);
         }
 
         public override void Initialize()
@@ -32,8 +32,7 @@ namespace MONOWar
 
         public override void LoadContent(ContentManager content)
         {
-            GameStateManager.Instance.gameInstance.Components.Add(testButton);
-            System.Diagnostics.Debug.WriteLine("Loading content");
+            GameStateManager.Instance.GameInstance.Components.Add(startButton);
             CurrentBackdrop = content.Load<Texture2D>(@"Backdrops//Test");
         }
 
