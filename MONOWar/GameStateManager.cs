@@ -40,7 +40,8 @@ namespace MONOWar
         }
         public void AddScreen(GameState screen)
         {
-            screens.Push(screen); // I didn't do the initializing and loading of the gamestate here like the tutorial did. might need it
+            screens.Push(screen);
+            screens.Peek().Initialize(); //Init ti too
             screens.Peek().LoadContent(Content); //Pass it the content manager
         }
         public void RemoveScreen()

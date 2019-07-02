@@ -13,6 +13,7 @@ namespace MONOWar
         public MainMenu(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
             startButton = new MainMenuButton(GameStateManager.Instance.GameInstance, 150, 150, 1);
+            GameStateManager.Instance.GameInstance.Components.Add(startButton);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -27,12 +28,12 @@ namespace MONOWar
 
         public override void Initialize()
         {
-         //   throw new System.NotImplementedException();
+            System.Diagnostics.Debug.WriteLine("Init");
+            //throw new System.NotImplementedException();
         }
 
         public override void LoadContent(ContentManager content)
         {
-            GameStateManager.Instance.GameInstance.Components.Add(startButton);
             CurrentBackdrop = content.Load<Texture2D>(@"Backdrops//Test");
         }
 
@@ -44,6 +45,8 @@ namespace MONOWar
         public override void Update(GameTime gameTime)
         {
          //   throw new System.NotImplementedException();
+         // The main menu does not need to update, nor does it need to call on its buttons to update
+         // Because they are game components that can be drawn
         }
     }
 }

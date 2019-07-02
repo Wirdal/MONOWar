@@ -7,33 +7,32 @@ namespace MONOWar
 {
     class InGame : GameState
     {
+        MapManager mapManager;
+        UnitManager unitManager;
         public InGame(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            throw new System.NotImplementedException();
+            graphicsDevice.Clear(Color.Aquamarine);
         }
 
         public override void Initialize()
         {
-            throw new System.NotImplementedException();
         }
 
         public override void LoadContent(ContentManager content)
         {
-            throw new System.NotImplementedException();
         }
 
         public override void UnloadContent()
         {
-            throw new System.NotImplementedException();
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new System.NotImplementedException();
         }
     }
 }

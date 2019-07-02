@@ -11,7 +11,7 @@ namespace MONOWar
         multiplayer=2,
         exit=3,
     }
-    class MainMenuButton : DrawableGameComponent
+    class MainMenuButton : GameObject
     {
 
         Texture2D testTexture;
@@ -31,7 +31,7 @@ namespace MONOWar
 
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
 
             spriteBatch.Begin();
@@ -83,7 +83,7 @@ namespace MONOWar
         }
         private void OnClick()
         {
-            GameStateManager.Instance.AddScreen(new InGame());
+            GameStateManager.Instance.AddScreen(new InGame(GraphicsDevice));
         }
     }
 }
