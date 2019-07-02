@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace MONOWar
 {
+    enum TileType
+    {
+        dirt = 1,
+    }
     class Tile
     {
     }

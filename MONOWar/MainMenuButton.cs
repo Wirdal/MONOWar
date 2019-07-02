@@ -83,7 +83,7 @@ namespace MONOWar
         }
         private void OnClick()
         {
-            GameStateManager.Instance.AddScreen(new InGame(GraphicsDevice));
+            GameStateManager.Instance.AddScreen(new InGame(GraphicsDevice)); // Will load the stuff we need
         }
     }
 }

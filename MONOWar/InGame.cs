@@ -11,7 +11,7 @@ namespace MONOWar
         UnitManager unitManager;
         public InGame(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
-
+            mapManager = new MapManager("testmap");
         }
 
         public override void Draw(SpriteBatch spriteBatch)
