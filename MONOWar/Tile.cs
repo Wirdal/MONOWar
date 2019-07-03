@@ -13,18 +13,22 @@ namespace MONOWar
     class Tile
     {
         TileType Type;
-        int xpos
+        // These are going to tell us where exactly the tile must be placed.
+        // The values will be appropriatley created during the CreateMap call in the MapManager
+        public int xpos
         {
-            get; set;
+            get;
         }
-        int ypos
+        public int ypos
         {
-            get; set;
+            get;
         }
 
-        public Tile(TileType type)
+        public Tile(TileType type, int xpos, int ypos)
         {
             Type = type;
+            this.xpos = xpos;
+            this.ypos = ypos;
         }
     }
 }

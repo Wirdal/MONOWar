@@ -38,21 +38,27 @@ namespace MONOWar
                 for (int j = 0; j < Map.GetLength(1); j++)
                 {
                     spriteBatch.Begin();
-                    spriteBatch.Draw(GrassTile, new Vector2(50, 50), Color.White);
+                    //Hardcore math time
+                    spriteBatch.Draw(GrassTile, new Rectangle(Map[i,j].xpos, Map[i, j].ypos, 40, 40), Color.White);
                     spriteBatch.End();
                 }
             }
         }
         private Tile[,] CreateMap(string mapname)
         {
+            // Open the map file
             Tile[,] tempmap = new Tile[2, 2];
 
             // Iterare through the dimensions
+            // The map file will need to contain some sort of template. It will need
+            // The tile type
+            // The offset from 0,0; which will be the center of the screen.
+            // That value can be scaled when we are drawing, based on our screen size, and other things.
             for (int i=0; i < tempmap.GetLength(0); i++)
             {
                 for (int j=0; j< tempmap.GetLength(1); j++)
                 {
-                    tempmap[i, j] = new Tile(TileType.GrassTile);
+                    tempmap[i, j] = new Tile(TileType.GrassTile, i, j);
                 }
             }
             return tempmap;
