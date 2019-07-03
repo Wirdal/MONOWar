@@ -34,17 +34,18 @@ namespace MONOWar
 
         public override void LoadContent(ContentManager content)
         {
-            CurrentBackdrop = content.Load<Texture2D>(@"Backdrops//Test");
+            CurrentBackdrop = content.Load<Texture2D>("Backdrops/Test");
         }
 
         public override void UnloadContent()
         {
-      //      throw new System.NotImplementedException();
+        //      throw new System.NotImplementedException();
         }
 
         public override void Update(GameTime gameTime)
         {
-         //   throw new System.NotImplementedException();
+            startButton.Enabled = true; // Force it to be true, if this screen is active
+         // throw new System.NotImplementedException();
          // The main menu does not need to update, nor does it need to call on its buttons to update
          // Because they are game components that can be drawn
         }

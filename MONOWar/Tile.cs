@@ -8,9 +8,23 @@ namespace MONOWar
 {
     enum TileType
     {
-        dirt = 1,
+        GrassTile = 0,
     }
     class Tile
     {
+        TileType Type;
+        int xpos
+        {
+            get; set;
+        }
+        int ypos
+        {
+            get; set;
+        }
+
+        public Tile(TileType type)
+        {
+            Type = type;
+        }
     }
 }

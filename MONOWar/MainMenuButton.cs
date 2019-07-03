@@ -21,14 +21,14 @@ namespace MONOWar
         int width, height;
         // So we know what screen to send to.
         int buttonType;
+        bool ButtonPressed = false;
         public MainMenuButton(Game game, int xpos, int ypos, int buttonType) : base(game)
         {
             this.xpos = xpos;
             this.ypos = ypos;
             this.buttonType = buttonType;
+                
             // These values are hardcoded, because thats the dimensions of the actual image
-
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -84,6 +84,7 @@ namespace MONOWar
         private void OnClick()
         {
             GameStateManager.Instance.AddScreen(new InGame(GraphicsDevice)); // Will load the stuff we need
+            Enabled = false; // set the component to be false.
         }
     }
 }

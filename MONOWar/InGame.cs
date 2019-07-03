@@ -7,24 +7,29 @@ namespace MONOWar
 {
     class InGame : GameState
     {
+        // Might make game states static, who knows. Might be too much work, though
         MapManager mapManager;
         UnitManager unitManager;
         public InGame(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
-            mapManager = new MapManager("testmap");
+            graphicsDevice.Clear(Color.Aquamarine);
+            System.Diagnostics.Debug.WriteLine("InGame");
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            graphicsDevice.Clear(Color.Aquamarine);
+            graphicsDevice.Clear(Color.Aquamarine); //  The background image placeholder
+            mapManager.DrawMap(spriteBatch);
         }
 
         public override void Initialize()
         {
+            mapManager = new MapManager("testmap");
         }
 
         public override void LoadContent(ContentManager content)
         {
+            mapManager.LoadContent(content);
         }
 
         public override void UnloadContent()
