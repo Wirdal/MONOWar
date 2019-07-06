@@ -43,8 +43,7 @@ namespace MONOWar
             screens.Push(screen);
             screens.Peek().Initialize(); //Init ti too
             screens.Peek().LoadContent(Content); //Pass it the content manager
-            System.Diagnostics.Debug.WriteLine("Screen amt");
-            System.Diagnostics.Debug.WriteLine(screens.Count());
+
         }
         public void RemoveScreen()
         {

@@ -24,7 +24,7 @@ namespace MONOWar
 
         public override void Initialize()
         {
-            mapManager = new MapManager("testmap");
+            mapManager = new MapManager("TestMap.map");
         }
 
         public override void LoadContent(ContentManager content)

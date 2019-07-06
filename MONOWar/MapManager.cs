@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.IO;
 
 namespace MONOWar
 {
@@ -11,6 +14,7 @@ namespace MONOWar
     {
         GraphicsDevice graphicsDevice;
         private Tile[,] Map; //  The tiles we have
+        private int NooTiles;
         // private Player[] Players; //  Want to know who is playing on the map
         public string mapname;
 
@@ -46,22 +50,19 @@ namespace MONOWar
         }
         private Tile[,] CreateMap(string mapname)
         {
+            this.mapname = mapname;
             // Open the map file
-            Tile[,] tempmap = new Tile[2, 2];
+            // Lets read the map.
+            string mapfile = File.ReadAllText("../../../../Maps/"+mapname);
 
-            // Iterare through the dimensions
-            // The map file will need to contain some sort of template. It will need
-            // The tile type
-            // The offset from 0,0; which will be the center of the screen.
-            // That value can be scaled when we are drawing, based on our screen size, and other things.
-            for (int i=0; i < tempmap.GetLength(0); i++)
-            {
-                for (int j=0; j< tempmap.GetLength(1); j++)
-                {
-                    tempmap[i, j] = new Tile(TileType.GrassTile, i, j);
-                }
-            }
-            return tempmap;
+            System.Diagnostics.Debug.WriteLine("Map");
+            // Find the tile amt. Construct a regex
+            Regex tempRX = new Regex(@"^(?:tileamt)\s*=\s*(?<val>\d*)$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+
+            Match matches = tempRX.Match(mapfile);
+            System.Diagnostics.Debug.WriteLine(matches.Value);
+
+            return new Tile[1, 1];
         }
     }
 }
