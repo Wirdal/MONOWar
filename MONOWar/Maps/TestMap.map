@@ -1,17 +1,16 @@
 ## Anything starting in # will be a comment, and thus ignored by the map.
 ## Here, we set up some more basic logistics for the map
 ## The amount of column and rows is maybe not needed, but nice to have
-Tileamt = 25 
+
+Tileamt = 25
 Rows = 5
 Cols = 5
 ## Now, we can outline what the rows will look like, and detail the offsets, from some center point.
-MapStart
-11111; offset=0
-11111; offset=-1
-11111; offset=0
-11111; offset=-1
-11111; offset=0
-MapEnd
+M=1; 11111; offset=0
+M=2; 11111; offset=-1
+M=3; 11111; offset=0
+M=4; 11111; offset=-1
+M=5; 11111; offset=0
 ## We've described the mat, and told the game the offset
 ## the map needs an offset, since it's an hex based map.
 ## It will look something like this
