@@ -12,6 +12,7 @@ namespace MONOWar
     }
     class Tile
     {
+        public Unit CurrentUnit;
         public TileType Type;
         // These are going to tell us where exactly the tile must be placed.
         // The values will be appropriatley created during the CreateMap call in the MapManager

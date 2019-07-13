@@ -16,6 +16,7 @@ namespace MONOWar
         GraphicsDevice graphicsDevice;
         private Tile[,] Map; //  The tiles we have
 
+        private bool evenq = false; // Is the map even-q? Default no, odd-q by default
 
         private int NooTiles;
         public string mapname;
@@ -43,13 +44,41 @@ namespace MONOWar
         public void DrawMap(SpriteBatch spriteBatch)
         {
             // We want to just draw the tiles.
-            for (int i = 0; i < Map.GetLength(0); i++)
+            // We are keeping them "flat"
+            // Also, will need to take into account eve
+            for (int i = 0; i < Map.GetLength(0); i++) //Row
             {
-                for (int j = 0; j < Map.GetLength(1); j++)
+                for (int j = 0; j < Map.GetLength(1); j++) //Col
                 {
                     spriteBatch.Begin();
-                    //Hardcore math time
-                    spriteBatch.Draw(GrassTile, new Rectangle(Map[i,j].xpos*30, Map[i, j].ypos*30, 40, 40), Color.White);
+                    // TODO 
+                    // Make this 1000x better.
+                    //Hardcore math time?
+                    // If the column is odd, stagger it
+                    if (evenq)
+                    {
+                        if ((i)%2 ==0 )
+                        {
+                            spriteBatch.Draw(GrassTile, new Rectangle(Map[i, j].xpos * GrassTile.Width / 4, Map[i, j].ypos * GrassTile.Height / 3 + GrassTile.Height / 8, GrassTile.Width / 3, GrassTile.Height / 3), Color.White);
+                        }
+                        // Its even
+                        else
+                        {
+                            spriteBatch.Draw(GrassTile, new Rectangle(Map[i, j].xpos * GrassTile.Width / 4, Map[i, j].ypos * GrassTile.Height / 3, GrassTile.Width / 3, GrassTile.Height / 3), Color.White);
+                        }
+                    }
+                    else
+                    {
+                        if((i-1)%2 == 0)
+                        {
+                            spriteBatch.Draw(GrassTile, new Rectangle(Map[i, j].xpos * GrassTile.Width/4, Map[i, j].ypos * GrassTile.Height / 3 + GrassTile.Height/8, GrassTile.Width / 3, GrassTile.Height / 3), Color.White);
+                        }
+                        // Its even
+                        else
+                        {
+                            spriteBatch.Draw(GrassTile, new Rectangle(Map[i,j].xpos*GrassTile.Width/4, Map[i, j].ypos*GrassTile.Height/3, GrassTile.Width/3, GrassTile.Height/3), Color.White);
+                        }
+                    }
                     spriteBatch.End();
                 }
             }
