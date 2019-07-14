@@ -26,6 +26,7 @@ namespace MONOWar
         // private Player[] Players; //  Want to know who is playing on the map
 
         Texture2D GrassTile;
+        Texture2D DirtTile;
         public MapManager(string mapname)
         {
             graphicsDevice = GameStateManager.Instance.GameInstance.GraphicsDevice;
@@ -34,8 +35,9 @@ namespace MONOWar
 
         public void LoadContent(ContentManager content)
         {
-            // We will want to load all of the tile content. Don't want to try and optimize
             GrassTile = content.Load<Texture2D>("Sprites/Tiles/GrassTile");
+            DirtTile = content.Load<Texture2D>("Sprites/Tiles/DirtTile");
+
         }
         public void UnloadContent()
         {
@@ -59,24 +61,36 @@ namespace MONOWar
                     {
                         if ((i)%2 ==0 )
                         {
-                            spriteBatch.Draw(GrassTile, new Rectangle(Map[i, j].xpos * GrassTile.Width / 4, Map[i, j].ypos * GrassTile.Height / 3 + GrassTile.Height / 8, GrassTile.Width / 3, GrassTile.Height / 3), Color.White);
+                            spriteBatch.Draw(
+                                GrassTile,
+                                new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3 + GrassTile.Height / 8, GrassTile.Width / 3, GrassTile.Height / 3),
+                                Color.White);
                         }
                         // Its even
                         else
                         {
-                            spriteBatch.Draw(GrassTile, new Rectangle(Map[i, j].xpos * GrassTile.Width / 4, Map[i, j].ypos * GrassTile.Height / 3, GrassTile.Width / 3, GrassTile.Height / 3), Color.White);
+                            spriteBatch.Draw(
+                                DirtTile,
+                                new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3, GrassTile.Width / 3, GrassTile.Height / 3),
+                                Color.White);
                         }
                     }
                     else
                     {
                         if((i-1)%2 == 0)
                         {
-                            spriteBatch.Draw(GrassTile, new Rectangle(Map[i, j].xpos * GrassTile.Width/4, Map[i, j].ypos * GrassTile.Height / 3 + GrassTile.Height/8, GrassTile.Width / 3, GrassTile.Height / 3), Color.White);
+                            spriteBatch.Draw(
+                                GrassTile,
+                                new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3 + GrassTile.Height / 8, GrassTile.Width / 3, GrassTile.Height / 3),
+                                Color.White);
                         }
                         // Its even
                         else
                         {
-                            spriteBatch.Draw(GrassTile, new Rectangle(Map[i,j].xpos*GrassTile.Width/4, Map[i, j].ypos*GrassTile.Height/3, GrassTile.Width/3, GrassTile.Height/3), Color.White);
+                            spriteBatch.Draw(
+                                DirtTile,
+                                new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3, GrassTile.Width / 3, GrassTile.Height / 3),
+                                Color.White);
                         }
                     }
                     spriteBatch.End();
@@ -149,9 +163,48 @@ namespace MONOWar
                     currentcolnum++;
                 }
             }
-            System.Diagnostics.Debug.WriteLine("Xpos {0}, Ypos {1}, Type {2}", Map[2,2].xpos, Map[2, 2].ypos, Map[2, 2].Type);
-
             // Now we just need to iterate through it properly
+            // System.Diagnostics.Debug.WriteLine("rownum {0} colnum {1}", Map[0, 0].rowplace, Map[0, 0].colplace);
+        }
+        public List<Tile> GetNeighbors(Tile tile)
+        {
+            List<Tile> returnlist = new List<Tile>();
+            // +1,0; +1, -1; 0, -1;
+            // -1,0; -1, +1; 0, +1;
+            // Tiles are indexed at 0
+            // Subtract the 
+            if (tile.colplace != colnum - 1)
+            {
+                returnlist.Add(Map[tile.colplace + 1, tile.rowplace]);
+            }
+
+            if ((tile.colplace != colnum - 1) && (tile.rowplace != 0))
+            {
+                returnlist.Add(Map[tile.colplace + 1, tile.rowplace - 1]);
+
+            }
+
+            if (tile.rowplace != 0)
+            {
+                returnlist.Add(Map[tile.colplace, tile.rowplace - 1]);
+            }
+
+            if (tile.colplace != 0)
+            {
+                returnlist.Add(Map[tile.colplace - 1, tile.rowplace]);
+            }
+
+            if ((tile.colplace != 0) && (tile.rowplace != rownum -1))
+            {
+                returnlist.Add(Map[tile.colplace - 1, tile.rowplace + 1]);
+            }
+
+            if (tile.rowplace != rownum - 1)
+            {
+                returnlist.Add(Map[tile.colplace, tile.rowplace + 1]);
+            }
+
+            return returnlist;
         }
     }
 }

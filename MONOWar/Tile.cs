@@ -8,11 +8,12 @@ namespace MONOWar
 {
     enum TileType
     {
-        GrassTile = 0,
+        Grass = 0,
+        Dirt = 1,
     }
     class Tile
     {
-        public Unit CurrentUnit;
+
         public TileType Type;
         // These are going to tell us where exactly the tile must be placed.
         // The values will be appropriatley created during the CreateMap call in the MapManager
@@ -22,11 +23,13 @@ namespace MONOWar
         // These are their column/row values
         public int colplace;
         public int rowplace;
-        public Tile(TileType type, int xpos, int ypos)
+
+        public Unit CurrentUnit;
+        public Tile(TileType type, int colplace, int rowplace)
         {
             Type = type;
-            this.xpos = xpos;
-            this.ypos = ypos;
+            this.colplace = colplace;
+            this.rowplace = rowplace;
         }
     }
 }

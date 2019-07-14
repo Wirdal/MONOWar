@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace MONOWar
 {
-    enum UnitType
-    {
-        Infantry = 1,
-    }
+
     class UnitManager
     {
         
