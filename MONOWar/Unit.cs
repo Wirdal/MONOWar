@@ -9,7 +9,7 @@ namespace MONOWar
     {
         Infantry = 0,
     }
-    class Unit : DrawableGameComponent
+    class Unit
     {
         // Current drawable position within the map
         int xpos, ypos;
@@ -17,9 +17,12 @@ namespace MONOWar
         int colplace, rowplace;
         // What kind of unit it is.
         UnitType type;
-        public Unit(Game game) : base(game)
-        {
 
+        public Unit(int colplace, int rowplace, UnitType type)
+        {
+            this.colplace = colplace;
+            this.rowplace = rowplace;
+            this.type = type;
         }
     }
 }

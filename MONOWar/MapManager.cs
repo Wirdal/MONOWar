@@ -23,6 +23,8 @@ namespace MONOWar
         private int colnum;
         private int rownum;
 
+        private List<Texture2D> tileSprites = new List<Texture2D>();
+
         // private Player[] Players; //  Want to know who is playing on the map
 
         Texture2D GrassTile;
@@ -36,8 +38,9 @@ namespace MONOWar
         public void LoadContent(ContentManager content)
         {
             GrassTile = content.Load<Texture2D>("Sprites/Tiles/GrassTile");
+            tileSprites.Add(GrassTile);
             DirtTile = content.Load<Texture2D>("Sprites/Tiles/DirtTile");
-
+            tileSprites.Add(DirtTile);
         }
         public void UnloadContent()
         {
@@ -62,7 +65,7 @@ namespace MONOWar
                         if ((i)%2 ==0 )
                         {
                             spriteBatch.Draw(
-                                GrassTile,
+                                tileSprites[(int) Map[i,j].Type],
                                 new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3 + GrassTile.Height / 8, GrassTile.Width / 3, GrassTile.Height / 3),
                                 Color.White);
                         }
@@ -70,7 +73,7 @@ namespace MONOWar
                         else
                         {
                             spriteBatch.Draw(
-                                DirtTile,
+                                tileSprites[(int)Map[i, j].Type],
                                 new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3, GrassTile.Width / 3, GrassTile.Height / 3),
                                 Color.White);
                         }
@@ -80,7 +83,7 @@ namespace MONOWar
                         if((i-1)%2 == 0)
                         {
                             spriteBatch.Draw(
-                                GrassTile,
+                                tileSprites[(int)Map[i, j].Type],
                                 new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3 + GrassTile.Height / 8, GrassTile.Width / 3, GrassTile.Height / 3),
                                 Color.White);
                         }
@@ -88,7 +91,7 @@ namespace MONOWar
                         else
                         {
                             spriteBatch.Draw(
-                                DirtTile,
+                                tileSprites[(int)Map[i, j].Type],
                                 new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3, GrassTile.Width / 3, GrassTile.Height / 3),
                                 Color.White);
                         }
@@ -159,7 +162,7 @@ namespace MONOWar
                 string tilelist = i.Groups["tiles"].Value;
                 foreach(int tiletype in tilelist)
                 {
-                    Map[currentrownum-1, currentcolnum] = new Tile((TileType)tiletype, currentrownum-1, currentcolnum);
+                    Map[currentcolnum, currentrownum-1] = new Tile((TileType)tiletype - 48, currentcolnum, currentrownum-1);
                     currentcolnum++;
                 }
             }

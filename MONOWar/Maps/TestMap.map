@@ -6,13 +6,12 @@ Tileamt = 25
 Rows = 5
 Cols = 5
 ## Now, we can outline what the rows will look like, and detail the offsets, from some center point.
-M=1; 11111; offset=0
+## OFFSET IS USELESS, DELETE IT FROM REGEX
+M=1; 00000; offset=0
 M=2; 11111; offset=-1
 M=3; 11111; offset=0
 M=4; 11111; offset=-1
 M=5; 11111; offset=0
-## We've described the mat, and told the game the offset
-## the map needs an offset, since it's an hex based map.
 ## It will look something like this
 ## 11111
 ##11111
