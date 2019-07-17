@@ -20,7 +20,7 @@ namespace MONOWar
         {
             graphicsDevice.Clear(Color.Aquamarine); //  The background image placeholder
             mapManager.DrawMap(spriteBatch);
-            // unitManager.DrawUnits
+            unitManager.DrawUnits(spriteBatch);
             // uiManager.Draw
         }
 
