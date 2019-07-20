@@ -17,14 +17,14 @@ namespace MONOWar
     }
     abstract class Unit
     {
-        UnitType type;
-        UnitColor color;
+        public UnitType type;
+        public UnitColor color;
 
-        int colplace, rowplace;
+        public int hitpoints;
+        public int colplace, rowplace;
         Tile currentTile;
-        public Unit(UnitType type, UnitColor color, int colplace, int rowplace, Tile tile)
+        public Unit(UnitColor color, int colplace, int rowplace, Tile tile)
         {
-            this.type = type;
             this.color = color;
             this.colplace = colplace;
             this.rowplace = rowplace;
@@ -40,9 +40,10 @@ namespace MONOWar
     }
     class Infantry : Unit
     {
-        public Infantry(UnitType type, UnitColor color, int colplace, int rowplace, Tile tile) : base(type, color, colplace, rowplace, tile)
+        public Infantry( UnitColor color, int colplace, int rowplace, Tile tile) : base(color, colplace, rowplace, tile)
         {
-            //sPEEED
+            type = UnitType.Infantry;
+            hitpoints = 100;
         }
         public override void Attack(Unit defender)
         {

@@ -13,6 +13,19 @@ namespace MONOWar
 
     class UnitManager
     {
+        private static UnitManager instance;
+        public static UnitManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new UnitManager();
+                }
+                return instance;
+            }
+        }
+        private ContentManager content;
         // Holds all the units created
         List<Unit> units = new List<Unit>();
 
@@ -22,7 +35,7 @@ namespace MONOWar
 
         public void CreateUnit(UnitType type, int colnum, int rownum, UnitColor color)
         {
-            units.Add(new Unit(colnum, rownum, type, color));
+           // units.Add(new Unit(colnum, rownum, color));
         }
         public void DrawUnits(SpriteBatch spriteBatch)
         {
@@ -30,6 +43,10 @@ namespace MONOWar
             {
                 // Find out their texture and color?
             }
+        }
+        public void LoadContent(ContentManager content)
+        {
+            this.content = content;
         }
     }
 }

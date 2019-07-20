@@ -13,6 +13,19 @@ namespace MONOWar
     // If we only need o ne, should I make it a singleton?
     class MapManager
     {
+        private static MapManager instance;
+        public static MapManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new MapManager();
+                }
+                return instance;
+            }
+        }
+
         GraphicsDevice graphicsDevice;
         private Tile[,] Map; //  The tiles we have
 
@@ -29,10 +42,9 @@ namespace MONOWar
 
         Texture2D GrassTile;
         Texture2D DirtTile;
-        public MapManager(string mapname)
+        public MapManager()
         {
             graphicsDevice = GameStateManager.Instance.GameInstance.GraphicsDevice;
-            CreateMap(mapname);
         }
 
         public void LoadContent(ContentManager content)
@@ -100,7 +112,7 @@ namespace MONOWar
                 }
             }
         }
-        private void CreateMap(string mapname)
+        public void CreateMap(string mapname)
         {
             this.mapname = mapname;
             // Open the map file
