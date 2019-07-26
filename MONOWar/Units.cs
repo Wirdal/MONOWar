@@ -15,11 +15,20 @@ namespace MONOWar
     {
         Red = 0
     }
+    enum WeaponType
+    {
+        MachineGun = 0,
+    }
+    enum TraversalType
+    {
+        Foot = 0,
+    }
     abstract class Unit
     {
         public UnitType type;
         public UnitColor color;
-
+        public WeaponType weapon;
+        
         public int hitpoints;
         public int colplace, rowplace;
         Tile currentTile;
@@ -44,15 +53,16 @@ namespace MONOWar
         {
             type = UnitType.Infantry;
             hitpoints = 100;
+            weapon = WeaponType.MachineGun;
         }
         public override void Attack(Unit defender)
         {
-            throw new NotImplementedException();
+            defender.Defend(this);
         }
 
         public override void Defend(Unit Attacker)
         {
-            throw new NotImplementedException();
+            // Loose some amount of health based on the weapon
         }
 
         public override List<Tile> GetTraversableTiles(Tile[,] map)

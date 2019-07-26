@@ -19,7 +19,7 @@ namespace MONOWar
         // The values will be appropriatley created during the CreateMap call in the MapManager
         public int xpos;
         public int ypos;
-
+        public int size;
         // These are their column/row values
         public int colplace;
         public int rowplace;
@@ -30,6 +30,17 @@ namespace MONOWar
             Type = type;
             this.colplace = colplace;
             this.rowplace = rowplace;
+        }
+        void OnClick()
+        {
+            // What happens when I click on the tile?
+            // Will want to display information about the tile
+            // As well as info about our unit
+            if (CurrentUnit != null)
+            {
+                // Also display info about the unit
+            }
+            // Display unit about the tile
         }
     }
 }

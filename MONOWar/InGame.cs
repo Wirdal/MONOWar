@@ -11,7 +11,6 @@ namespace MONOWar
         public InGame(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
             graphicsDevice.Clear(Color.Aquamarine);
-            System.Diagnostics.Debug.WriteLine("InGame");
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -24,7 +23,10 @@ namespace MONOWar
 
         public override void Initialize()
         {
+            // Buttons will need to communicate with the map name, in the map manager
             MapManager.Instance.CreateMap("TestMap.map");
+            // Starting a new map, so we probably should clear this thing out.
+            UnitManager.Instance.ClearUnits();
         }
 
         public override void LoadContent(ContentManager content)

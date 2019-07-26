@@ -48,5 +48,9 @@ namespace MONOWar
         {
             this.content = content;
         }
+        public void ClearUnits()
+        {
+            units.Clear();
+        }
     }
 }

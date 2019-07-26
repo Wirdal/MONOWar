@@ -35,6 +35,7 @@ namespace MONOWar
         public string mapname;
         private int colnum;
         private int rownum;
+        private int tileheight, tilewidth;
 
         private List<Texture2D> tileSprites = new List<Texture2D>();
 
@@ -50,9 +51,11 @@ namespace MONOWar
         public void LoadContent(ContentManager content)
         {
             GrassTile = content.Load<Texture2D>("Sprites/Tiles/GrassTile");
-            tileSprites.Add(GrassTile);
             DirtTile = content.Load<Texture2D>("Sprites/Tiles/DirtTile");
+            tileSprites.Add(GrassTile);
             tileSprites.Add(DirtTile);
+            tileheight = GrassTile.Height / 4;
+            tilewidth = GrassTile.Width / 4;
         }
         public void UnloadContent()
         {
@@ -63,11 +66,11 @@ namespace MONOWar
             // We want to just draw the tiles.
             // We are keeping them "flat"
             // Also, will need to take into account eve
-            for (int i = 0; i < Map.GetLength(0); i++) //Row
+            spriteBatch.Begin();
+            for (int i = 0; i < Map.GetLength(0); i++) //Col 
             {
-                for (int j = 0; j < Map.GetLength(1); j++) //Col
+                for (int j = 0; j < Map.GetLength(1); j++) //Row 
                 {
-                    spriteBatch.Begin();
                     // TODO 
                     // Make this 1000x better.
                     //Hardcore math time?
@@ -78,7 +81,7 @@ namespace MONOWar
                         {
                             spriteBatch.Draw(
                                 tileSprites[(int) Map[i,j].Type],
-                                new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3 + GrassTile.Height / 8, GrassTile.Width / 3, GrassTile.Height / 3),
+                                new Rectangle(Map[i, j].colplace * tilewidth *3/4, Map[i, j].rowplace * tileheight + tileheight / 2, tilewidth, tileheight),
                                 Color.White);
                         }
                         // Its even
@@ -86,7 +89,7 @@ namespace MONOWar
                         {
                             spriteBatch.Draw(
                                 tileSprites[(int)Map[i, j].Type],
-                                new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3, GrassTile.Width / 3, GrassTile.Height / 3),
+                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4, Map[i, j].rowplace * tileheight, tilewidth, tileheight),
                                 Color.White);
                         }
                     }
@@ -96,7 +99,7 @@ namespace MONOWar
                         {
                             spriteBatch.Draw(
                                 tileSprites[(int)Map[i, j].Type],
-                                new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3 + GrassTile.Height / 8, GrassTile.Width / 3, GrassTile.Height / 3),
+                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4 , Map[i, j].rowplace * tileheight + tileheight / 2, tilewidth, tileheight),
                                 Color.White);
                         }
                         // Its even
@@ -104,13 +107,13 @@ namespace MONOWar
                         {
                             spriteBatch.Draw(
                                 tileSprites[(int)Map[i, j].Type],
-                                new Rectangle(Map[i, j].colplace * GrassTile.Width / 4, Map[i, j].rowplace * GrassTile.Height / 3, GrassTile.Width / 3, GrassTile.Height / 3),
+                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4, Map[i, j].rowplace * tileheight, tilewidth, tileheight),
                                 Color.White);
                         }
                     }
-                    spriteBatch.End();
                 }
             }
+            spriteBatch.End();
         }
         public void CreateMap(string mapname)
         {
@@ -177,10 +180,15 @@ namespace MONOWar
                 {
                     Map[currentcolnum, currentrownum-1] = new Tile((TileType)tiletype - 48, currentcolnum, currentrownum-1);
                     currentcolnum++;
+                    // System.Diagnostics.Debug.WriteLine("Tile type: {0}, Coords, {1}, {2}", tiletype - 48, currentcolnum - 1 , currentrownum -1);
                 }
             }
-            // Now we just need to iterate through it properly
-            // System.Diagnostics.Debug.WriteLine("rownum {0} colnum {1}", Map[0, 0].rowplace, Map[0, 0].colplace);
+            Regex EvenqRX = new Regex(@"^(?<true>(evenq))", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            Match EvenqMatch = EvenqRX.Match(mapfile);
+            if (EvenqMatch.Success)
+            {
+                evenq = true;
+            }
         }
         public List<Tile> GetNeighbors(Tile tile)
         {

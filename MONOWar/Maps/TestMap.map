@@ -12,13 +12,9 @@ M=2; 11111; offset=-1
 M=3; 11111; offset=0
 M=4; 11111; offset=-1
 M=5; 11111; offset=0
-## It will look something like this
-## 11111
-##11111
-## 11111
-##11111
-## 11111
+## May or may not need to change the numbers part, we';; see
 ## Since the tiles need to fit in together.
 UnitStart
 UnitEnd
+Oddq
 ## With that, we've described the map.
