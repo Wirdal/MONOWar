@@ -230,5 +230,9 @@ namespace MONOWar
 
             return returnlist;
         }
+        public void Update(GameTime gameTime)
+        {
+
+        }
     }
 }

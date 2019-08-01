@@ -28,7 +28,7 @@ namespace MONOWar
         public UnitType type;
         public UnitColor color;
         public WeaponType weapon;
-        
+
         public int hitpoints;
         public int colplace, rowplace;
         Tile currentTile;
@@ -47,9 +47,12 @@ namespace MONOWar
         }
         public abstract List<Tile> GetTraversableTiles(Tile[,] map);
     }
+        // Need to have constant kinds of sprite sheets
+        //
+
     class Infantry : Unit
     {
-        public Infantry( UnitColor color, int colplace, int rowplace, Tile tile) : base(color, colplace, rowplace, tile)
+        public Infantry(UnitColor color, int colplace, int rowplace, Tile tile) : base(color, colplace, rowplace, tile)
         {
             type = UnitType.Infantry;
             hitpoints = 100;
@@ -70,5 +73,4 @@ namespace MONOWar
             throw new NotImplementedException();
         }
     }
-
 }
