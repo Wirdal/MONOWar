@@ -36,13 +36,23 @@ namespace MONOWar
 
         //Assuming that our spritesheet is a perfect square
 
-        Point frameSize = new Point(19, 19);
+        Point frameSize = new Point(20, 20);
         Point currentFrame = new Point(0, 0);
         Point sheetSize = new Point(2, 2);
+        const int millisecondsPerFrame = 120;
+        int timeSinceLastFrame = 0;
 
-        public void CreateUnit(UnitType type, int colnum, int rownum, UnitColor color)
+        public void CreateUnit(UnitType type, int colnum, int rownum, UnitColor color, Tile tile)
         {
-           units.Add(new Infantry(UnitColor.Red, colnum, rownum, null));
+            switch (type)
+            {
+                case UnitType.Infantry:
+                    units.Add(new Infantry(color, colnum, rownum, tile));
+                    break;
+                default:
+                    break;
+
+            }
         }
         public void DrawUnits(SpriteBatch spriteBatch)
         {
@@ -51,7 +61,7 @@ namespace MONOWar
             {
                 // Find out their texture and color? ^
                 spriteBatch.Draw(TestSprite,
-                                 new Rectangle(150, 150, TestSprite.Width / 2, TestSprite.Height / 2),
+                                 new Rectangle(unit.currentTile.xpos, unit.currentTile.ypos, TestSprite.Width / 2, TestSprite.Height / 2),
                                  new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y),
                                  Color.White);
             }
@@ -70,14 +80,19 @@ namespace MONOWar
         }
         public void Update(GameTime gameTime)
         {
-            currentFrame.X++;
-            if (currentFrame.X >= sheetSize.X)
+            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            if (timeSinceLastFrame > millisecondsPerFrame)
             {
-                currentFrame.X = 0;
-                currentFrame.Y++;
-                if (currentFrame.Y >= sheetSize.Y)
+                timeSinceLastFrame -= millisecondsPerFrame;
+                currentFrame.X++;
+                if (currentFrame.X >= sheetSize.X)
                 {
-                    currentFrame.Y = 0;
+                    currentFrame.X = 0;
+                    currentFrame.Y++;
+                    if (currentFrame.Y >= sheetSize.Y)
+                    {
+                        currentFrame.Y = 0;
+                    }
                 }
             }
         }

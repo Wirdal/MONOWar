@@ -81,15 +81,16 @@ namespace MONOWar
                         {
                             spriteBatch.Draw(
                                 tileSprites[(int) Map[i,j].Type],
-                                new Rectangle(Map[i, j].colplace * tilewidth *3/4, Map[i, j].rowplace * tileheight + tileheight / 2, tilewidth, tileheight),
+                                new Rectangle(Map[i, j].colplace * tilewidth *3/4, Map[i, j].rowplace * tileheight + tileheight / 2, tilewidth + 2, tileheight + 2),
                                 Color.White);
+                            // Set the Tiles location as well, with what we've drawn.
                         }
                         // Its even
                         else
                         {
                             spriteBatch.Draw(
                                 tileSprites[(int)Map[i, j].Type],
-                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4, Map[i, j].rowplace * tileheight, tilewidth, tileheight),
+                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4, Map[i, j].rowplace * tileheight, tilewidth + 2, tileheight + 2),
                                 Color.White);
                         }
                     }
@@ -99,7 +100,7 @@ namespace MONOWar
                         {
                             spriteBatch.Draw(
                                 tileSprites[(int)Map[i, j].Type],
-                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4 , Map[i, j].rowplace * tileheight + tileheight / 2, tilewidth, tileheight),
+                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4 , Map[i, j].rowplace * tileheight + tileheight / 2, tilewidth + 2, tileheight+ 2),
                                 Color.White);
                         }
                         // Its even
@@ -107,7 +108,7 @@ namespace MONOWar
                         {
                             spriteBatch.Draw(
                                 tileSprites[(int)Map[i, j].Type],
-                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4, Map[i, j].rowplace * tileheight, tilewidth, tileheight),
+                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4, Map[i, j].rowplace * tileheight, tilewidth + 2, tileheight + 2),
                                 Color.White);
                         }
                     }

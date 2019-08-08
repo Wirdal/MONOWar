@@ -31,7 +31,7 @@ namespace MONOWar
 
         public int hitpoints;
         public int colplace, rowplace;
-        Tile currentTile;
+        public Tile currentTile;
         public Unit(UnitColor color, int colplace, int rowplace, Tile tile)
         {
             this.color = color;
@@ -44,6 +44,7 @@ namespace MONOWar
         public virtual void Move(Tile tile)
         {
             this.currentTile = tile;
+            tile.CurrentUnit = this;
         }
         public abstract List<Tile> GetTraversableTiles(Tile[,] map);
     }

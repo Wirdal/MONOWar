@@ -27,7 +27,7 @@ namespace MONOWar
             MapManager.Instance.CreateMap("TestMap.map");
             // Starting a new map, so we probably should clear this thing out.
             UnitManager.Instance.ClearUnits();
-            UnitManager.Instance.CreateUnit(UnitType.Infantry, 0, 0, UnitColor.Red);
+            // UnitManager.Instance.CreateUnit(UnitType.Infantry, 0, 0, UnitColor.Red);
         }
 
         public override void LoadContent(ContentManager content)
