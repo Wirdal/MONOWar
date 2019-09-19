@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Backdrops/MapSelect.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Backdrops/MapSelect.png
+
 #begin Backdrops/Test.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -31,13 +43,6 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/MenuBold.spritefont
-
-#begin Fonts/Test.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Fonts/Test.spritefont
 
 #begin RedBlock.png
 /importer:TextureImporter
@@ -63,6 +68,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/DirtTile.png
 
+#begin Sprites/Tiles/FactoryTile.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Tiles/FactoryTile.png
+
 #begin Sprites/Tiles/GrassTile.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -74,6 +91,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/GrassTile.png
+
+#begin Sprites/Units/InfantrySprite.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Units/InfantrySprite.png
 
 #begin Sprites/Units/TestSprite.png
 /importer:TextureImporter

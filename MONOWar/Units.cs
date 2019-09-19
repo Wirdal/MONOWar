@@ -19,28 +19,45 @@ namespace MONOWar
     {
         MachineGun = 0,
     }
+    enum ArmorType
+    {
+        None = 0,
+    }
     enum TraversalType
     {
         Foot = 0,
     }
+    /// <summary>
+    /// This class provides the skeleton that all unit types will derive from.
+    /// </summary>
     abstract class Unit
     {
         public UnitType type;
         public UnitColor color;
         public WeaponType weapon;
+        public ArmorType armor;
 
         public int hitpoints;
         public int colplace, rowplace;
+
         public Tile currentTile;
         public Unit(UnitColor color, int colplace, int rowplace, Tile tile)
+            // TODO get rid of colplace and rowplace, get it from the tile.
+            // Maybe do a method for it.
         {
             this.color = color;
             this.colplace = colplace;
             this.rowplace = rowplace;
             currentTile = tile;
         }
-        public abstract void Attack(Unit defender);
-        public abstract void Defend(Unit Attacker);
+        public virtual void Attack(Unit defender)
+        {
+
+        }
+        public virtual void Defend(Unit Attacker)
+        {
+
+        }
         public virtual void Move(Tile tile)
         {
             this.currentTile = tile;

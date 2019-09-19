@@ -27,18 +27,22 @@ namespace MONOWar
         }
         private ContentManager content;
         Texture2D TestSprite;
-        // Holds all the units created
+        Texture2D InfantrySprite;
+        // Holds all the units created1
         List<Unit> units = new List<Unit>();
 
         List<Texture2D> unitSprites = new List<Texture2D>();
         //Lists for seperate unit colors
         List<List<Texture2D>> unitsColored = new List<List<Texture2D>>();
 
+        public static Unit selectedUnit = null;
+        public static Tile selectedTile = null;
         //Assuming that our spritesheet is a perfect square
 
         Point frameSize = new Point(20, 20);
         Point currentFrame = new Point(0, 0);
         Point sheetSize = new Point(2, 2);
+
         const int millisecondsPerFrame = 120;
         int timeSinceLastFrame = 0;
 
@@ -72,6 +76,7 @@ namespace MONOWar
             this.content = content;
 
             TestSprite = content.Load<Texture2D>("Sprites/Units/TestSprite");
+            InfantrySprite = content.Load<Texture2D>("Sprites/Units/InfantrySprite");
             unitSprites.Add(TestSprite);
         }
         public void ClearUnits()

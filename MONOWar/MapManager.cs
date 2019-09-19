@@ -9,8 +9,7 @@ using System.IO;
 
 namespace MONOWar
 {
-    // Both controls and creates the map
-    // If we only need o ne, should I make it a singleton?
+    // Setting up
     class MapManager
     {
         private static MapManager instance;
@@ -29,20 +28,31 @@ namespace MONOWar
         GraphicsDevice graphicsDevice;
         private Tile[,] Map; //  The tiles we have
 
+        // General Map information
         private bool evenq = false; // Is the map even-q? Default no, odd-q by default
-
         private int NooTiles;
         public string mapname;
+
+        // Map details;
         private int colnum;
         private int rownum;
         private int tileheight, tilewidth;
+
+        // Navigation variables
+        public int zoomLevel = 10;
+        public int cameraX = 0;
+        public int cameraY = 0;
+
+
 
         private List<Texture2D> tileSprites = new List<Texture2D>();
 
         // private Player[] Players; //  Want to know who is playing on the map
 
+        //Textures;
         Texture2D GrassTile;
         Texture2D DirtTile;
+        Texture2D FactoryTile;
         public MapManager()
         {
             graphicsDevice = GameStateManager.Instance.GameInstance.GraphicsDevice;
@@ -52,8 +62,10 @@ namespace MONOWar
         {
             GrassTile = content.Load<Texture2D>("Sprites/Tiles/GrassTile");
             DirtTile = content.Load<Texture2D>("Sprites/Tiles/DirtTile");
+            FactoryTile = content.Load<Texture2D>("Sprites/Tiles/FactoryTile");
             tileSprites.Add(GrassTile);
             tileSprites.Add(DirtTile);
+            tileSprites.Add(FactoryTile);
             tileheight = GrassTile.Height / 4;
             tilewidth = GrassTile.Width / 4;
         }
@@ -66,52 +78,53 @@ namespace MONOWar
             // We want to just draw the tiles.
             // We are keeping them "flat"
             // Also, will need to take into account eve
+            // Figure out the scale from our zoomlevel.
+            // Possibly do that in update
+
             spriteBatch.Begin();
             for (int i = 0; i < Map.GetLength(0); i++) //Col 
             {
                 for (int j = 0; j < Map.GetLength(1); j++) //Row 
                 {
-                    // TODO 
-                    // Make this 1000x better.
-                    //Hardcore math time?
-                    // If the column is odd, stagger it
+                    int tempx = (Map[i, j].colplace * tilewidth * 3 / 4) + cameraX;
+                    int tempy;
                     if (evenq)
                     {
-                        if ((i)%2 ==0 )
+                        if ((i) % 2 == 0)
                         {
-                            spriteBatch.Draw(
-                                tileSprites[(int) Map[i,j].Type],
-                                new Rectangle(Map[i, j].colplace * tilewidth *3/4, Map[i, j].rowplace * tileheight + tileheight / 2, tilewidth + 2, tileheight + 2),
-                                Color.White);
-                            // Set the Tiles location as well, with what we've drawn.
+                            tempy = Map[i, j].rowplace * tileheight + tileheight / 2;
                         }
-                        // Its even
                         else
                         {
-                            spriteBatch.Draw(
-                                tileSprites[(int)Map[i, j].Type],
-                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4, Map[i, j].rowplace * tileheight, tilewidth + 2, tileheight + 2),
-                                Color.White);
+                            tempy = Map[i, j].rowplace * tileheight;
                         }
                     }
                     else
                     {
-                        if((i-1)%2 == 0)
+                        if ((i - 1) % 2 == 0)
                         {
-                            spriteBatch.Draw(
-                                tileSprites[(int)Map[i, j].Type],
-                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4 , Map[i, j].rowplace * tileheight + tileheight / 2, tilewidth + 2, tileheight+ 2),
-                                Color.White);
+                            tempy = Map[i, j].rowplace * tileheight + tileheight / 2;
                         }
-                        // Its even
                         else
                         {
-                            spriteBatch.Draw(
-                                tileSprites[(int)Map[i, j].Type],
-                                new Rectangle(Map[i, j].colplace * tilewidth * 3/4, Map[i, j].rowplace * tileheight, tilewidth + 2, tileheight + 2),
-                                Color.White);
+                            tempy = Map[i, j].rowplace * tileheight;
                         }
                     }
+                    tempy += cameraY;
+                    int tempwidth = tilewidth + 2;
+                    int tempheight = tileheight + 2;
+                    int tyletype = (int)Map[i, j].Type;
+                    // Set up our variables here
+                    // TODO 
+                    // Make this 1000x better.
+                    spriteBatch.Draw(
+                        tileSprites[tyletype],
+                        new Rectangle(tempx, tempy, tempwidth, tempheight),
+                        Color.White);
+                    Map[i, j].xpos = tempx;
+                    Map[i, j].ypos = tempy;
+
+
                 }
             }
             spriteBatch.End();
@@ -121,7 +134,8 @@ namespace MONOWar
             this.mapname = mapname;
             // Open the map file
             // Lets read the map.
-            string mapfile = File.ReadAllText("../../../../Maps/"+mapname);
+            System.Diagnostics.Debug.WriteLine(mapname);
+            string mapfile = File.ReadAllText("../../../../Maps/"+mapname+".map");
 
             System.Diagnostics.Debug.WriteLine("Map");
             // Find the tile amt. Construct a regex
