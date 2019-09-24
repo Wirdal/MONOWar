@@ -12,7 +12,7 @@ namespace MONOWar
         public InGame(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
             graphicsDevice.Clear(Color.Aquamarine);
-             scrollvalue = Mouse.GetState().ScrollWheelValue;
+            scrollvalue = Mouse.GetState().ScrollWheelValue;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -72,6 +72,14 @@ namespace MONOWar
             {
                 MapManager.Instance.cameraX--;
             }
+            // Click handling
+            if (mouse.LeftButton == ButtonState.Pressed)
+            {
+                // Find out where where the mouse is, and if we're clicking on anything.
+                // Are we going to have to figure out where we have clicked?
+                int tempx = mouse.Position.X;
+                int tempy = mouse.Position.Y;
+            }
             if (mouse.ScrollWheelValue > scrollvalue)
             {
                 MapManager.Instance.zoomLevel++;
@@ -80,9 +88,8 @@ namespace MONOWar
             {
                 MapManager.Instance.zoomLevel--;
             }
+
             scrollvalue = mouse.ScrollWheelValue;
-
-
         }
     }
 }

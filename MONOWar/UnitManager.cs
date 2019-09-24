@@ -36,7 +36,6 @@ namespace MONOWar
         List<List<Texture2D>> unitsColored = new List<List<Texture2D>>();
 
         public static Unit selectedUnit = null;
-        public static Tile selectedTile = null;
         //Assuming that our spritesheet is a perfect square
 
         Point frameSize = new Point(20, 20);

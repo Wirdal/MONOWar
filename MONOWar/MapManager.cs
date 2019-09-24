@@ -43,6 +43,8 @@ namespace MONOWar
         public int cameraX = 0;
         public int cameraY = 0;
 
+        // Selection variable
+        public static Tile selectedTile = null;
 
 
         private List<Texture2D> tileSprites = new List<Texture2D>();
@@ -50,6 +52,8 @@ namespace MONOWar
         // private Player[] Players; //  Want to know who is playing on the map
 
         //Textures;
+        Texture2D Orang;
+
         Texture2D GrassTile;
         Texture2D DirtTile;
         Texture2D FactoryTile;
@@ -63,6 +67,7 @@ namespace MONOWar
             GrassTile = content.Load<Texture2D>("Sprites/Tiles/GrassTile");
             DirtTile = content.Load<Texture2D>("Sprites/Tiles/DirtTile");
             FactoryTile = content.Load<Texture2D>("Sprites/Tiles/FactoryTile");
+            Orang = content.Load<Texture2D>("Orang");
             tileSprites.Add(GrassTile);
             tileSprites.Add(DirtTile);
             tileSprites.Add(FactoryTile);
@@ -123,11 +128,23 @@ namespace MONOWar
                         Color.White);
                     Map[i, j].xpos = tempx;
                     Map[i, j].ypos = tempy;
-
-
+                    Map[i, j].height = tempheight;
+                    Map[i, j].width = tempwidth;
+                    Map[i, j].updateClickBox();
+                    // Lets also check the click box location by drawing it
+                    // spriteBatch.Draw(Orang, new Rectangle(Map[i, j].boxx, Map[i, j].boxy, Map[i, j].boxwidth, Map[i, j].boxheight), Color.White);
                 }
             }
             spriteBatch.End();
+        }
+        public Tile FindClickedTile(Mouse mouse)
+        {
+            foreach(Tile tile in Map)
+            {
+
+            }
+            return null;
+
         }
         public void CreateMap(string mapname)
         {
