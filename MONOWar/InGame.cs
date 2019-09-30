@@ -74,7 +74,7 @@ namespace MONOWar
                 MapManager.Instance.cameraX--;
             }
             // Click handling
-            if (mouse.LeftButton == ButtonState.Pressed)
+            if ((mouse.LeftButton == ButtonState.Pressed) && (prevState.LeftButton == ButtonState.Released))
             {
                 System.Diagnostics.Debug.WriteLine("Handling clicking");
                 Tile clickedtile = MapManager.Instance.FindClickedTile(mouse);
@@ -93,6 +93,7 @@ namespace MONOWar
             }
 
             scrollvalue = mouse.ScrollWheelValue;
+            prevState = mouse;
         }
     }
 }
