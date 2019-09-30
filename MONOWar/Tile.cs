@@ -27,11 +27,7 @@ namespace MONOWar
         public int rowplace;
         // Info for the click box
         // I am going to replace this stuff with a button instead.
-        public int boxx;
-        public int boxy;
-        public int boxwidth;
-        public int boxheight;
-        public int center;
+        public TileButton clickButton;
 
         // The unit currently on the tile
         public Unit CurrentUnit;
@@ -40,6 +36,7 @@ namespace MONOWar
             Type = type;
             this.colplace = colplace;
             this.rowplace = rowplace;
+            clickButton = new TileButton(GameStateManager.Instance.GameInstance, 0, 0); //Will update these values later
             // Xpos and Ypos are assigned during draw
         }
         public void updateClickBox()
@@ -49,16 +46,16 @@ namespace MONOWar
             // Update our x and y
             double d = 60.000D;
             double tempboxx = Math.Tan(d) * (Convert.ToDouble(height/2)); // This is how far we go into our hexagon to place the x boundaries on the click box
-            boxx = Convert.ToInt32(tempboxx) + xpos + 14;
+            clickButton.xpos = Convert.ToInt32(tempboxx) + xpos + 14;
             // Top of our Y is just the ypos of the hexagon, plus a couple of pixels
-            boxy = ypos + height/4;
+            clickButton.ypos= ypos + height/4;
 
             // Update the boxw
-            boxwidth = width/2;
-            boxheight = height/2 ;
+            clickButton.width = width/2;
+            clickButton.height = height/2 ;
             // I think we're done?
         }
-        void OnClick()
+        private void OnClick()
         {
             // What happens when I click on the tile?
             // Will want to display information about the tile
@@ -70,5 +67,6 @@ namespace MONOWar
             }
             // Display unit about the tile
         }
+        
     }
 }

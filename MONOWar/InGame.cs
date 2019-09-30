@@ -8,6 +8,7 @@ namespace MONOWar
     class InGame : GameState
     {
         private int scrollvalue;
+        private MouseState prevState;
         // Might make game states static, who knows. Might be too much work, though
         public InGame(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
@@ -75,10 +76,12 @@ namespace MONOWar
             // Click handling
             if (mouse.LeftButton == ButtonState.Pressed)
             {
-                // Find out where where the mouse is, and if we're clicking on anything.
-                // Are we going to have to figure out where we have clicked?
-                int tempx = mouse.Position.X;
-                int tempy = mouse.Position.Y;
+                System.Diagnostics.Debug.WriteLine("Handling clicking");
+                Tile clickedtile = MapManager.Instance.FindClickedTile(mouse);
+                if(clickedtile != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Xpos {0} Ypos {1}", clickedtile.colplace, clickedtile.rowplace);
+                }
             }
             if (mouse.ScrollWheelValue > scrollvalue)
             {

@@ -132,18 +132,23 @@ namespace MONOWar
                     Map[i, j].width = tempwidth;
                     Map[i, j].updateClickBox();
                     // Lets also check the click box location by drawing it
-                    // spriteBatch.Draw(Orang, new Rectangle(Map[i, j].boxx, Map[i, j].boxy, Map[i, j].boxwidth, Map[i, j].boxheight), Color.White);
+                    spriteBatch.Draw(Orang, new Rectangle(Map[i, j].clickButton.xpos, Map[i, j].clickButton.ypos, Map[i, j].clickButton.width, Map[i, j].clickButton.height), Color.White);
                 }
             }
             spriteBatch.End();
         }
-        public Tile FindClickedTile(Mouse mouse)
+        public Tile FindClickedTile(MouseState mouse)
         {
+            Tile returntile = null;
             foreach(Tile tile in Map)
             {
-
+                if (tile.clickButton.CheckForHover(mouse))
+                {
+                    System.Diagnostics.Debug.WriteLine("Tile found");
+                    returntile = tile;
+                }
             }
-            return null;
+            return returntile;
 
         }
         public void CreateMap(string mapname)

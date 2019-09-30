@@ -11,13 +11,6 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MONOWar
 {
-    enum MainMenuButtonTypes
-    {
-        settings = 0,
-        start = 1,
-        multiplayer = 2,
-        exit = 3,
-    }
     abstract class Button : GameObject
     {
         // Where the button will be placed
@@ -63,11 +56,36 @@ namespace MONOWar
             }
             return false;
         }
+        public virtual bool CheckForHover(MouseState mouse)
+        {
+            if ((mouse.X > xpos) & (mouse.X < xpos + width)
+               & (mouse.Y > ypos) & (mouse.Y < ypos + height))
+            {
+                return true;
+            }
+            return false;
+        }
         public virtual bool CheckForClick()
         {
             if (CheckForHover())
             {
                 MouseState mouse = Mouse.GetState();
+                if ((mouse.LeftButton == ButtonState.Released) & (prevMouseState.LeftButton == ButtonState.Pressed))
+                {
+                    return true;
+                }
+                else
+                {
+                    prevMouseState = mouse;
+                    return false;
+                }
+            }
+            return false;
+        }
+        public virtual bool CheckForClick(MouseState mouse)
+        {
+            if (CheckForHover())
+            {
                 if ((mouse.LeftButton == ButtonState.Released) & (prevMouseState.LeftButton == ButtonState.Pressed))
                 {
                     return true;
@@ -227,5 +245,18 @@ namespace MONOWar
             }
             base.Update(gameTime);
         }
+    }
+    class TileButton : Button
+    {
+
+        public TileButton(Game game, int xpos, int ypos) : base(game, xpos, ypos)
+        {
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            // Do nothing. We don't want to draw this.
+        }
+        
     }
 }
