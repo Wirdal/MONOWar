@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 namespace MONOWar
 {
-    enum TileType
+    enum ETileType
     {
         Grass = 0,
         Dirt = 1,
@@ -14,7 +15,7 @@ namespace MONOWar
     class Tile
     {
 
-        public TileType Type;
+        public ETileType type;
         // These are going to tell us where exactly the tile must be placed.
         // They are also updated during the draw method, cause it hold the relevant details;
         public int xpos;
@@ -29,17 +30,21 @@ namespace MONOWar
         // I am going to replace this stuff with a button instead.
         public TileButton clickButton;
 
+
+
         // The unit currently on the tile
-        public Unit CurrentUnit;
-        public Tile(TileType type, int colplace, int rowplace)
+        public Unit currentUnit;
+        // Where the unit should be drawn
+        public Rectangle unitRectangle;
+        public Tile(ETileType type, int colplace, int rowplace)
         {
-            Type = type;
+            this.type = type;
             this.colplace = colplace;
             this.rowplace = rowplace;
             clickButton = new TileButton(GameStateManager.Instance.GameInstance, 0, 0); //Will update these values later
             // Xpos and Ypos are assigned during draw
         }
-        public void updateClickBox()
+        public void UpdateClickBox()
         {
 
             // Find the distance we need to go down
@@ -61,7 +66,7 @@ namespace MONOWar
             // Will want to display information about the tile
             // As well as info about our unit
             MapManager.selectedTile = this;
-            if (CurrentUnit != null)
+            if (currentUnit != null)
             {
                 // Also display info about the unit
             }

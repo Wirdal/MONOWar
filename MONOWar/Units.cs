@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace MONOWar
 {
-    enum UnitType
+    enum EUnitType
     {
         Infantry = 0,
 
     }
-    enum UnitColor
+    enum EUnitColor
     {
         Red = 0
     }
-    enum WeaponType
+    enum EWeaponType
     {
         MachineGun = 0,
     }
-    enum ArmorType
+    enum EArmorType
     {
         None = 0,
     }
-    enum TraversalType
+    enum ETraversalType
     {
         Foot = 0,
     }
@@ -32,16 +32,17 @@ namespace MONOWar
     /// </summary>
     abstract class Unit
     {
-        public UnitType type;
-        public UnitColor color;
-        public WeaponType weapon;
-        public ArmorType armor;
+        public EUnitType type;
+        public EUnitColor color;
+        public EWeaponType weapon;
+        public EArmorType armor;
+        public ETraversalType traversalType;
 
         public int hitpoints;
         public int colplace, rowplace;
 
         public Tile currentTile;
-        public Unit(UnitColor color, int colplace, int rowplace, Tile tile)
+        public Unit(EUnitColor color, int colplace, int rowplace, Tile tile)
             // TODO get rid of colplace and rowplace, get it from the tile.
             // Maybe do a method for it.
         {
@@ -54,14 +55,14 @@ namespace MONOWar
         {
 
         }
-        public virtual void Defend(Unit Attacker)
+        public virtual void Defend(Unit attacker)
         {
 
         }
         public virtual void Move(Tile tile)
         {
             this.currentTile = tile;
-            tile.CurrentUnit = this;
+            tile.currentUnit = this;
         }
         public abstract List<Tile> GetTraversableTiles(Tile[,] map);
     }
@@ -70,18 +71,18 @@ namespace MONOWar
 
     class Infantry : Unit
     {
-        public Infantry(UnitColor color, int colplace, int rowplace, Tile tile) : base(color, colplace, rowplace, tile)
+        public Infantry(EUnitColor color, int colplace, int rowplace, Tile tile) : base(color, colplace, rowplace, tile)
         {
-            type = UnitType.Infantry;
+            type = EUnitType.Infantry;
             hitpoints = 100;
-            weapon = WeaponType.MachineGun;
+            weapon = EWeaponType.MachineGun;
         }
         public override void Attack(Unit defender)
         {
             defender.Defend(this);
         }
 
-        public override void Defend(Unit Attacker)
+        public override void Defend(Unit attacker)
         {
             // Loose some amount of health based on the weapon
         }

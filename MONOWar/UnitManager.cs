@@ -25,31 +25,35 @@ namespace MONOWar
                 return instance;
             }
         }
-        private ContentManager content;
-        Texture2D TestSprite;
-        Texture2D InfantrySprite;
         // Holds all the units created1
         List<Unit> units = new List<Unit>();
 
-        List<Texture2D> unitSprites = new List<Texture2D>();
         //Lists for seperate unit colors
-        List<List<Texture2D>> unitsColored = new List<List<Texture2D>>();
+        // We add the sprites into the appropriate list when they are loaded.
+        // 0 = Red
+        // 1 = Blue
+        // 2 = Green
+        // 3 = Yellow
+        // 4 = Purple
+        // In addition, the units themselves are in order in the list, according to enum Unit Type. Defined in Unit.cs
+        // 0 = Infantry
+        List<Texture2D>[] unitsColored = new List<Texture2D>[5];
 
-        public static Unit selectedUnit = null;
+        public static Unit SelectedUnit = null;
         //Assuming that our spritesheet is a perfect square
 
-        Point frameSize = new Point(20, 20);
+        Point frameSize = new Point(32, 32);
         Point currentFrame = new Point(0, 0);
         Point sheetSize = new Point(2, 2);
 
-        const int millisecondsPerFrame = 120;
+        const int MillisecondsPerFrame = 120;
         int timeSinceLastFrame = 0;
 
-        public void CreateUnit(UnitType type, int colnum, int rownum, UnitColor color, Tile tile)
+        public void CreateUnit(EUnitType type, int colnum, int rownum, EUnitColor color, Tile tile)
         {
             switch (type)
             {
-                case UnitType.Infantry:
+                case EUnitType.Infantry:
                     units.Add(new Infantry(color, colnum, rownum, tile));
                     break;
                 default:
@@ -62,21 +66,18 @@ namespace MONOWar
             spriteBatch.Begin();
             foreach (Unit unit in units)
             {
+
                 // Find out their texture and color? ^
-                spriteBatch.Draw(TestSprite,
-                                 new Rectangle(unit.currentTile.xpos, unit.currentTile.ypos, TestSprite.Width / 2, TestSprite.Height / 2),
-                                 new Rectangle(currentFrame.X * frameSize.X, currentFrame.Y * frameSize.Y, frameSize.X, frameSize.Y),
-                                 Color.White);
+                int unitType = (int)unit.type;
+                int unitColor = (int)unit.color;
+                spriteBatch.Draw(unitsColored[unitColor][unitType], unit.currentTile.unitRectangle, new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White);
             }
             spriteBatch.End();
         }
         public void LoadContent(ContentManager content)
         {
-            this.content = content;
-
-            TestSprite = content.Load<Texture2D>("Sprites/Units/TestSprite");
-            InfantrySprite = content.Load<Texture2D>("Sprites/Units/InfantrySprite");
-            unitSprites.Add(TestSprite);
+            // Load the red unit sprites.
+            unitsColored[0].Add(content.Load<Texture2D>("Sprites/Units/Red/Infantry"));
         }
         public void ClearUnits()
         {
@@ -85,9 +86,9 @@ namespace MONOWar
         public void Update(GameTime gameTime)
         {
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-            if (timeSinceLastFrame > millisecondsPerFrame)
+            if (timeSinceLastFrame > MillisecondsPerFrame)
             {
-                timeSinceLastFrame -= millisecondsPerFrame;
+                timeSinceLastFrame -= MillisecondsPerFrame;
                 currentFrame.X++;
                 if (currentFrame.X >= sheetSize.X)
                 {

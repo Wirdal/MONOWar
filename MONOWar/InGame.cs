@@ -76,11 +76,16 @@ namespace MONOWar
             // Click handling
             if ((mouse.LeftButton == ButtonState.Pressed) && (prevState.LeftButton == ButtonState.Released))
             {
-                System.Diagnostics.Debug.WriteLine("Handling clicking");
+                // System.Diagnostics.Debug.WriteLine("Handling clicking");
                 Tile clickedtile = MapManager.Instance.FindClickedTile(mouse);
                 if(clickedtile != null)
                 {
-                    System.Diagnostics.Debug.WriteLine("Xpos {0} Ypos {1}", clickedtile.colplace, clickedtile.rowplace);
+                    // System.Diagnostics.Debug.WriteLine("Xpos {0} Ypos {1}", clickedtile.colplace, clickedtile.rowplace);
+                    MapManager.selectedTile = clickedtile;
+                    if (clickedtile.currentUnit != null)
+                    {
+                        UnitManager.SelectedUnit = clickedtile.currentUnit;
+                    }
                 }
             }
             if (mouse.ScrollWheelValue > scrollvalue)

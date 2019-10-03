@@ -118,7 +118,7 @@ namespace MONOWar
                     tempy += cameraY;
                     int tempwidth = tilewidth + 2;
                     int tempheight = tileheight + 2;
-                    int tyletype = (int)Map[i, j].Type;
+                    int tyletype = (int)Map[i, j].type;
                     // Set up our variables here
                     // TODO 
                     // Make this 1000x better.
@@ -130,9 +130,9 @@ namespace MONOWar
                     Map[i, j].ypos = tempy;
                     Map[i, j].height = tempheight;
                     Map[i, j].width = tempwidth;
-                    Map[i, j].updateClickBox();
+                    Map[i, j].UpdateClickBox();
                     // Lets also check the click box location by drawing it
-                    spriteBatch.Draw(Orang, new Rectangle(Map[i, j].clickButton.xpos, Map[i, j].clickButton.ypos, Map[i, j].clickButton.width, Map[i, j].clickButton.height), Color.White);
+                    // spriteBatch.Draw(Orang, new Rectangle(Map[i, j].clickButton.xpos, Map[i, j].clickButton.ypos, Map[i, j].clickButton.width, Map[i, j].clickButton.height), Color.White);
                 }
             }
             spriteBatch.End();
@@ -144,7 +144,7 @@ namespace MONOWar
             {
                 if (tile.clickButton.CheckForHover(mouse))
                 {
-                    System.Diagnostics.Debug.WriteLine("Tile found");
+                    // System.Diagnostics.Debug.WriteLine("Tile found");
                     returntile = tile;
                 }
             }
@@ -215,7 +215,7 @@ namespace MONOWar
                 string tilelist = i.Groups["tiles"].Value;
                 foreach(int tiletype in tilelist)
                 {
-                    Map[currentcolnum, currentrownum-1] = new Tile((TileType)tiletype - 48, currentcolnum, currentrownum-1);
+                    Map[currentcolnum, currentrownum-1] = new Tile((ETileType)tiletype - 48, currentcolnum, currentrownum-1);
                     currentcolnum++;
                     // System.Diagnostics.Debug.WriteLine("Tile type: {0}, Coords, {1}, {2}", tiletype - 48, currentcolnum - 1 , currentrownum -1);
                 }
