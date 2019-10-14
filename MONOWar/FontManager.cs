@@ -12,26 +12,26 @@ namespace MONOWar
     // Lmfao this is the 4th "manager" I have added
     class FontManager
     {
-        private static FontManager instance = null;
+        private static FontManager PrivateInstance = null;
 
-        public static FontManager Instance
+        public static FontManager publicInstance
         {
             get
             {
-                if (instance == null){
-                    instance = new FontManager();
+                if (PrivateInstance == null){
+                    PrivateInstance = new FontManager();
                 }
-                return instance;
+                return PrivateInstance;
             }
         }
 
 
-        public SpriteFont MenuBold;
+        public SpriteFont menuBold;
 
 
         public void LoadContent(ContentManager content)
         {
-            MenuBold = content.Load<SpriteFont>("Fonts/MenuBold");
+            menuBold = content.Load<SpriteFont>("Fonts/MenuBold");
         }
 
     }

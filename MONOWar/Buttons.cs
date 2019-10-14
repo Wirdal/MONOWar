@@ -147,7 +147,7 @@ namespace MONOWar
         {
             System.Diagnostics.Debug.WriteLine("Button clicked");
 
-            GameStateManager.Instance.AddScreen(new MapSelect(GraphicsDevice)); // Will load the stuff we need
+            GameStateManager.publicInstance.AddScreen(new MapSelect(GraphicsDevice)); // Will load the stuff we need
             base.OnClick();
 
         }
@@ -187,7 +187,7 @@ namespace MONOWar
             {
                 return;
             }
-            GameStateManager.Instance.AddScreen(new InGame(GraphicsDevice));
+            GameStateManager.publicInstance.AddScreen(new InGame(GraphicsDevice));
             // then transition into Ingame as well;
             // Shouldn't have to deal with repeat presses if we only add the screen once, and immediatley transition
             base.OnClick();
@@ -196,7 +196,7 @@ namespace MONOWar
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            spriteBatch.DrawString(FontManager.Instance.MenuBold, "Select Map", new Vector2(xpos, ypos), color);
+            spriteBatch.DrawString(FontManager.publicInstance.menuBold, "Select Map", new Vector2(xpos, ypos), color);
             spriteBatch.End();
         }
     }
@@ -220,7 +220,7 @@ namespace MONOWar
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            spriteBatch.DrawString(FontManager.Instance.MenuBold, Mapname, new Vector2(xpos, ypos), color);
+            spriteBatch.DrawString(FontManager.publicInstance.menuBold, Mapname, new Vector2(xpos, ypos), color);
             spriteBatch.End();
         }
         public override void OnClick()

@@ -51,12 +51,12 @@ namespace MONOWar
             int i = 0;
             foreach (string map in maps)
             {
-                Button newbutton = new MapNameButton(GameStateManager.Instance.GameInstance, 52, 30 * i + 30, map);
+                Button newbutton = new MapNameButton(GameStateManager.publicInstance.gameInstance, 52, 30 * i + 30, map);
                 buttons.Add(newbutton);
                 i++;
             }
             // Create the select button
-            buttons.Add(new MapSelectButton(GameStateManager.Instance.GameInstance, 655, 415));
+            buttons.Add(new MapSelectButton(GameStateManager.publicInstance.gameInstance, 655, 415));
 
         }
 

@@ -28,11 +28,11 @@ namespace MONOWar
         {
             // TODO: Add your initialization logic here
             // Let's create the main menu screen here
-            GameStateManager.Instance.SetContent(Content);
-            GameStateManager.Instance.GameInstance = this;
+            GameStateManager.publicInstance.SetContent(Content);
+            GameStateManager.publicInstance.gameInstance = this;
             IsMouseVisible = true;
             MainMenu mainScreen = new MainMenu(graphics.GraphicsDevice);
-            GameStateManager.Instance.AddScreen(mainScreen);
+            GameStateManager.publicInstance.AddScreen(mainScreen);
             base.Initialize();
         }
 
@@ -45,9 +45,9 @@ namespace MONOWar
             // Create a new SpriteBatch, which can be used to draw textures.
             // TODO: use this.Content to load your game content here
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            MapManager.Instance.LoadContent(Content);
-            UnitManager.Instance.LoadContent(Content);
-            FontManager.Instance.LoadContent(Content);
+            MapManager.publicInstance.LoadContent(Content);
+            UnitManager.publicInstance.LoadContent(Content);
+            FontManager.publicInstance.LoadContent(Content);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace MONOWar
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            GameStateManager.Instance.UnloadContent();
+            GameStateManager.publicInstance.UnloadContent();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace MONOWar
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            GameStateManager.Instance.Update(gameTime);
+            GameStateManager.publicInstance.Update(gameTime);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -81,7 +81,7 @@ namespace MONOWar
         {
 
             // TODO: Add your drawing code here
-            GameStateManager.Instance.Draw(spriteBatch);
+            GameStateManager.publicInstance.Draw(spriteBatch);
             base.Draw(gameTime);
         }
     }

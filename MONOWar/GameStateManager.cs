@@ -10,39 +10,39 @@ namespace MONOWar
     class GameStateManager
     {
         // Singleton pattern
-        private static GameStateManager instance;
+        private static GameStateManager PrivateInstance;
         // Going to store the game states within a stack
         private Stack<GameState> screens = new Stack<GameState>();
-        private  ContentManager Content
+        private  ContentManager content
         {
             get; set;
         }
 
-        public Game GameInstance
+        public Game gameInstance
         {
             get; set;
         }
         // Also a field, because I don't think I can pass it around too much
-        public static GameStateManager Instance
+        public static GameStateManager publicInstance
         {
             get
             {
-                if (instance == null)
+                if (PrivateInstance == null)
                 {
-                    instance = new GameStateManager();
+                    PrivateInstance = new GameStateManager();
                 }
-                return instance;
+                return PrivateInstance;
             }
         }
         public void SetContent(ContentManager content)
         {
-            this.Content = content;
+            this.content = content;
         }
         public void AddScreen(GameState screen)
         {
             screens.Push(screen);
             screens.Peek().Initialize(); //Init ti too
-            screens.Peek().LoadContent(Content); //Pass it the content manager
+            screens.Peek().LoadContent(content); //Pass it the content manager
 
         }
         public void RemoveScreen()

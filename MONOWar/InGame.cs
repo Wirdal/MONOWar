@@ -19,17 +19,17 @@ namespace MONOWar
         public override void Draw(SpriteBatch spriteBatch)
         {
             graphicsDevice.Clear(Color.Aquamarine); //  The background image placeholder
-            MapManager.Instance.DrawMap(spriteBatch);
-            UnitManager.Instance.DrawUnits(spriteBatch);
+            MapManager.publicInstance.DrawMap(spriteBatch);
+            UnitManager.publicInstance.DrawUnits(spriteBatch);
             // uiManager.Draw
         }
 
         public override void Initialize()
         {
             // Buttons will need to communicate with the map name, in the map manager
-            MapManager.Instance.CreateMap(MapSelect.SelectedMap);
+            MapManager.publicInstance.CreateMap(MapSelect.SelectedMap);
             // Starting a new map, so we probably should clear this thing out.
-            UnitManager.Instance.ClearUnits();
+            UnitManager.publicInstance.ClearUnits();
             // UnitManager.Instance.CreateUnit(UnitType.Infantry, 0, 0, UnitColor.Red);
         }
 
@@ -46,9 +46,9 @@ namespace MONOWar
             // Handle controls.
             HandleControls();
             //Update the map
-            MapManager.Instance.Update(gameTime);
+            MapManager.publicInstance.Update(gameTime);
             // Update the units
-            UnitManager.Instance.Update(gameTime);
+            UnitManager.publicInstance.Update(gameTime);
 
         }
         private void HandleControls()
@@ -59,42 +59,47 @@ namespace MONOWar
             // Might need more
             if (keyboard.IsKeyDown(Keys.Up))
             {
-                MapManager.Instance.cameraY--;
+                MapManager.publicInstance.cameraY--;
             }
             if (keyboard.IsKeyDown(Keys.Down))
             {
-                MapManager.Instance.cameraY++;
+                MapManager.publicInstance.cameraY++;
             }
             if (keyboard.IsKeyDown(Keys.Right))
             {
-                MapManager.Instance.cameraX++;
+                MapManager.publicInstance.cameraX++;
             }
             if (keyboard.IsKeyDown(Keys.Left))
             {
-                MapManager.Instance.cameraX--;
+                MapManager.publicInstance.cameraX--;
             }
             // Click handling
             if ((mouse.LeftButton == ButtonState.Pressed) && (prevState.LeftButton == ButtonState.Released))
             {
                 // System.Diagnostics.Debug.WriteLine("Handling clicking");
-                Tile clickedtile = MapManager.Instance.FindClickedTile(mouse);
+                Tile clickedtile = MapManager.publicInstance.FindClickedTile(mouse);
                 if(clickedtile != null)
                 {
+                    clickedtile.OnClick();
                     // System.Diagnostics.Debug.WriteLine("Xpos {0} Ypos {1}", clickedtile.colplace, clickedtile.rowplace);
-                    MapManager.selectedTile = clickedtile;
+                    MapManager.SelectedTile = clickedtile;
                     if (clickedtile.currentUnit != null)
                     {
                         UnitManager.SelectedUnit = clickedtile.currentUnit;
+                    }
+                    else
+                    {
+                        UnitManager.publicInstance.CreateUnit(EUnitType.Infantry, EUnitColor.Red, clickedtile);
                     }
                 }
             }
             if (mouse.ScrollWheelValue > scrollvalue)
             {
-                MapManager.Instance.zoomLevel++;
+                MapManager.publicInstance.zoomLevel++;
             }
             else if (mouse.ScrollWheelValue < scrollvalue)
             {
-                MapManager.Instance.zoomLevel--;
+                MapManager.publicInstance.zoomLevel--;
             }
 
             scrollvalue = mouse.ScrollWheelValue;

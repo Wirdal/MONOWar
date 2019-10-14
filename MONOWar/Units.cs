@@ -42,13 +42,12 @@ namespace MONOWar
         public int colplace, rowplace;
 
         public Tile currentTile;
-        public Unit(EUnitColor color, int colplace, int rowplace, Tile tile)
-            // TODO get rid of colplace and rowplace, get it from the tile.
+        public Unit(EUnitColor color, Tile tile)
             // Maybe do a method for it.
         {
             this.color = color;
-            this.colplace = colplace;
-            this.rowplace = rowplace;
+            this.colplace = tile.colplace;
+            this.rowplace = tile.rowplace;
             currentTile = tile;
         }
         public virtual void Attack(Unit defender)
@@ -71,7 +70,7 @@ namespace MONOWar
 
     class Infantry : Unit
     {
-        public Infantry(EUnitColor color, int colplace, int rowplace, Tile tile) : base(color, colplace, rowplace, tile)
+        public Infantry(EUnitColor color, Tile tile): base(color, tile)
         {
             type = EUnitType.Infantry;
             hitpoints = 100;

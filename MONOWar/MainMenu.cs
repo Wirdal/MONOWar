@@ -15,7 +15,7 @@ namespace MONOWar
         Texture2D CurrentBackdrop;
         public MainMenu(GraphicsDevice graphicsDevice) : base(graphicsDevice)
         {
-            Buttons.Add(new MainMenuButton(GameStateManager.Instance.GameInstance, 150, 150));
+            Buttons.Add(new MainMenuButton(GameStateManager.publicInstance.gameInstance, 150, 150));
         }
 
         public override void Draw(SpriteBatch spriteBatch)

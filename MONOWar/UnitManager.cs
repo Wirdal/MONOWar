@@ -13,19 +13,20 @@ namespace MONOWar
 
     class UnitManager
     {
-        private static UnitManager instance;
-        public static UnitManager Instance
+        private static UnitManager PrivateInstance;
+        public static UnitManager publicInstance
         {
             get
             {
-                if (instance == null)
+                if (PrivateInstance == null)
                 {
-                    instance = new UnitManager();
+                    PrivateInstance = new UnitManager();
                 }
-                return instance;
+                return PrivateInstance;
             }
         }
-        // Holds all the units created1
+
+        // Holds all the units created
         List<Unit> units = new List<Unit>();
 
         //Lists for seperate unit colors
@@ -35,26 +36,26 @@ namespace MONOWar
         // 2 = Green
         // 3 = Yellow
         // 4 = Purple
-        // In addition, the units themselves are in order in the list, according to enum Unit Type. Defined in Unit.cs
+        // In addition, the units themselves are in order in the list,according to enum Unit Type. Defined in Unit.cs
         // 0 = Infantry
         List<Texture2D>[] unitsColored = new List<Texture2D>[5];
 
         public static Unit SelectedUnit = null;
         //Assuming that our spritesheet is a perfect square
 
-        Point frameSize = new Point(32, 32);
-        Point currentFrame = new Point(0, 0);
-        Point sheetSize = new Point(2, 2);
+        static Point FrameSize = new Point(32, 32);
+        static Point CurrentFrame = new Point(0, 0);
+        static Point SheetSize = new Point(2, 2);
 
         const int MillisecondsPerFrame = 120;
         int timeSinceLastFrame = 0;
 
-        public void CreateUnit(EUnitType type, int colnum, int rownum, EUnitColor color, Tile tile)
+        public void CreateUnit(EUnitType type, EUnitColor color, Tile tile)
         {
             switch (type)
             {
                 case EUnitType.Infantry:
-                    units.Add(new Infantry(color, colnum, rownum, tile));
+                    units.Add(new Infantry(color, tile));
                     break;
                 default:
                     break;
@@ -70,14 +71,18 @@ namespace MONOWar
                 // Find out their texture and color? ^
                 int unitType = (int)unit.type;
                 int unitColor = (int)unit.color;
-                spriteBatch.Draw(unitsColored[unitColor][unitType], unit.currentTile.unitRectangle, new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White);
+                System.Diagnostics.Debug.WriteLine("Drawing units");
+                spriteBatch.Draw(unitsColored[unitColor][unitType], unit.currentTile.unitRectangle, new Rectangle(CurrentFrame.X, CurrentFrame.Y, FrameSize.X, FrameSize.Y), Color.White);
             }
             spriteBatch.End();
         }
         public void LoadContent(ContentManager content)
         {
-            // Load the red unit sprites.
+            // Load the red unit sprites and construct the list the will preside in.
+            unitsColored[0] = new List<Texture2D>();
             unitsColored[0].Add(content.Load<Texture2D>("Sprites/Units/Red/Infantry"));
+            // Load the blue
+            // ...
         }
         public void ClearUnits()
         {
@@ -89,14 +94,14 @@ namespace MONOWar
             if (timeSinceLastFrame > MillisecondsPerFrame)
             {
                 timeSinceLastFrame -= MillisecondsPerFrame;
-                currentFrame.X++;
-                if (currentFrame.X >= sheetSize.X)
+                CurrentFrame.X++;
+                if (CurrentFrame.X >= SheetSize.X)
                 {
-                    currentFrame.X = 0;
-                    currentFrame.Y++;
-                    if (currentFrame.Y >= sheetSize.Y)
+                    CurrentFrame.X = 0;
+                    CurrentFrame.Y++;
+                    if (CurrentFrame.Y >= SheetSize.Y)
                     {
-                        currentFrame.Y = 0;
+                        CurrentFrame.Y = 0;
                     }
                 }
             }

@@ -128,11 +128,6 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Units/Red/Infantry.png
 
-#begin Sprites/Units/Red/Infantry.xcf
-/importer:
-/processor:
-/build:Sprites/Units/Red/Infantry.xcf
-
 #begin Sprites/Units/TestSprite.png
 /importer:TextureImporter
 /processor:TextureProcessor

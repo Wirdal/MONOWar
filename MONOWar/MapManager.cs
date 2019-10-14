@@ -12,16 +12,16 @@ namespace MONOWar
     // Setting up
     class MapManager
     {
-        private static MapManager instance;
-        public static MapManager Instance
+        private static MapManager PrivateInstance;
+        public static MapManager publicInstance
         {
             get
             {
-                if (instance == null)
+                if (PrivateInstance == null)
                 {
-                    instance = new MapManager();
+                    PrivateInstance = new MapManager();
                 }
-                return instance;
+                return PrivateInstance;
             }
         }
 
@@ -30,7 +30,7 @@ namespace MONOWar
 
         // General Map information
         private bool evenq = false; // Is the map even-q? Default no, odd-q by default
-        private int NooTiles;
+        private int nooTiles;
         public string mapname;
 
         // Map details;
@@ -44,7 +44,7 @@ namespace MONOWar
         public int cameraY = 0;
 
         // Selection variable
-        public static Tile selectedTile = null;
+        public static Tile SelectedTile = null;
 
 
         private List<Texture2D> tileSprites = new List<Texture2D>();
@@ -59,7 +59,7 @@ namespace MONOWar
         Texture2D FactoryTile;
         public MapManager()
         {
-            graphicsDevice = GameStateManager.Instance.GameInstance.GraphicsDevice;
+            graphicsDevice = GameStateManager.publicInstance.gameInstance.GraphicsDevice;
         }
 
         public void LoadContent(ContentManager content)
@@ -172,7 +172,7 @@ namespace MONOWar
             else
             {
 
-                Int32.TryParse(TileMatch.Groups["val"].Value, out NooTiles);
+                Int32.TryParse(TileMatch.Groups["val"].Value, out nooTiles);
             }
             // We're going to do Some other fields as well, which can just be found out through the variable names. So bite me
             Regex RowRX = new Regex(@"^(?:Rows)\s*=\s*(?<val>\d*)\s*$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
