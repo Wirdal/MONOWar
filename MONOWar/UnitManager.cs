@@ -71,8 +71,7 @@ namespace MONOWar
                 // Find out their texture and color? ^
                 int unitType = (int)unit.type;
                 int unitColor = (int)unit.color;
-                System.Diagnostics.Debug.WriteLine("Drawing units");
-                spriteBatch.Draw(unitsColored[unitColor][unitType], unit.currentTile.unitRectangle, new Rectangle(CurrentFrame.X, CurrentFrame.Y, FrameSize.X, FrameSize.Y), Color.White);
+                spriteBatch.Draw(unitsColored[unitColor][unitType], unit.currentTile.unitRectangle, new Rectangle(CurrentFrame.X * FrameSize.X, CurrentFrame.Y * FrameSize.Y, FrameSize.X, FrameSize.Y), Color.White);
             }
             spriteBatch.End();
         }
