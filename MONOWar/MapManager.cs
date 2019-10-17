@@ -26,7 +26,7 @@ namespace MONOWar
         }
 
         GraphicsDevice graphicsDevice;
-        private Tile[,] Map; //  The tiles we have
+        private Tile[,] map; //  The tiles we have
 
         // General Map information
         private bool evenq = false; // Is the map even-q? Default no, odd-q by default
@@ -52,11 +52,11 @@ namespace MONOWar
         // private Player[] Players; //  Want to know who is playing on the map
 
         //Textures;
-        Texture2D Orang;
+        Texture2D orang;
 
-        Texture2D GrassTile;
-        Texture2D DirtTile;
-        Texture2D FactoryTile;
+        Texture2D grassTile;
+        Texture2D dirtTile;
+        Texture2D factoryTile;
         public MapManager()
         {
             graphicsDevice = GameStateManager.publicInstance.gameInstance.GraphicsDevice;
@@ -64,15 +64,15 @@ namespace MONOWar
 
         public void LoadContent(ContentManager content)
         {
-            GrassTile = content.Load<Texture2D>("Sprites/Tiles/GrassTile");
-            DirtTile = content.Load<Texture2D>("Sprites/Tiles/DirtTile");
-            FactoryTile = content.Load<Texture2D>("Sprites/Tiles/FactoryTile");
-            Orang = content.Load<Texture2D>("Orang");
-            tileSprites.Add(GrassTile);
-            tileSprites.Add(DirtTile);
-            tileSprites.Add(FactoryTile);
-            tileheight = GrassTile.Height / 4;
-            tilewidth = GrassTile.Width / 4;
+            grassTile = content.Load<Texture2D>("Sprites/Tiles/GrassTile");
+            dirtTile = content.Load<Texture2D>("Sprites/Tiles/DirtTile");
+            factoryTile = content.Load<Texture2D>("Sprites/Tiles/FactoryTile");
+            orang = content.Load<Texture2D>("Orang");
+            tileSprites.Add(grassTile);
+            tileSprites.Add(dirtTile);
+            tileSprites.Add(factoryTile);
+            tileheight = grassTile.Height / 4;
+            tilewidth = grassTile.Width / 4;
         }
         public void UnloadContent()
         {
@@ -87,38 +87,38 @@ namespace MONOWar
             // Possibly do that in update
 
             spriteBatch.Begin();
-            for (int i = 0; i < Map.GetLength(0); i++) //Col 
+            for (int i = 0; i < map.GetLength(0); i++) //Col 
             {
-                for (int j = 0; j < Map.GetLength(1); j++) //Row 
+                for (int j = 0; j < map.GetLength(1); j++) //Row 
                 {
-                    int tempx = (Map[i, j].colplace * tilewidth * 3 / 4) + cameraX;
+                    int tempx = (map[i, j].colplace * tilewidth * 3 / 4) + cameraX;
                     int tempy;
                     if (evenq)
                     {
                         if ((i) % 2 == 0)
                         {
-                            tempy = Map[i, j].rowplace * tileheight + tileheight / 2;
+                            tempy = map[i, j].rowplace * tileheight + tileheight / 2;
                         }
                         else
                         {
-                            tempy = Map[i, j].rowplace * tileheight;
+                            tempy = map[i, j].rowplace * tileheight;
                         }
                     }
                     else
                     {
                         if ((i - 1) % 2 == 0)
                         {
-                            tempy = Map[i, j].rowplace * tileheight + tileheight / 2;
+                            tempy = map[i, j].rowplace * tileheight + tileheight / 2;
                         }
                         else
                         {
-                            tempy = Map[i, j].rowplace * tileheight;
+                            tempy = map[i, j].rowplace * tileheight;
                         }
                     }
                     tempy += cameraY;
                     int tempwidth = tilewidth + 2;
                     int tempheight = tileheight + 2;
-                    int tyletype = (int)Map[i, j].type;
+                    int tyletype = (int)map[i, j].type;
                     // Set up our variables here
                     // TODO 
                     // Make this 1000x better.
@@ -126,11 +126,11 @@ namespace MONOWar
                         tileSprites[tyletype],
                         new Rectangle(tempx, tempy, tempwidth, tempheight),
                         Color.White);
-                    Map[i, j].xpos = tempx;
-                    Map[i, j].ypos = tempy;
-                    Map[i, j].height = tempheight;
-                    Map[i, j].width = tempwidth;
-                    Map[i, j].UpdateClickBox();
+                    map[i, j].xpos = tempx;
+                    map[i, j].ypos = tempy;
+                    map[i, j].height = tempheight;
+                    map[i, j].width = tempwidth;
+                    map[i, j].UpdateClickBox();
                     // Lets also check the click box location by drawing it
                     // spriteBatch.Draw(Orang, new Rectangle(Map[i, j].clickButton.xpos, Map[i, j].clickButton.ypos, Map[i, j].clickButton.width, Map[i, j].clickButton.height), Color.White);
                 }
@@ -140,7 +140,7 @@ namespace MONOWar
         public Tile FindClickedTile(MouseState mouse)
         {
             Tile returntile = null;
-            foreach(Tile tile in Map)
+            foreach(Tile tile in map)
             {
                 if (tile.clickButton.CheckForHover(mouse))
                 {
@@ -204,7 +204,7 @@ namespace MONOWar
             // Multiline, global, and case-insensitive
             Regex MapRX = new Regex(@"M\s*=\s*(?<rownum>\d*);\s*(?<tiles>\d*);\s*offset\s*=\s*(?<offset>-?\d*)", RegexOptions.IgnoreCase | RegexOptions.Multiline);
             MatchCollection MapMatch = MapRX.Matches(mapfile);
-            Map = new Tile[rownum, colnum];
+            map = new Tile[rownum, colnum];
 
             foreach (Match i in MapMatch)
             {
@@ -215,7 +215,7 @@ namespace MONOWar
                 string tilelist = i.Groups["tiles"].Value;
                 foreach(int tiletype in tilelist)
                 {
-                    Map[currentcolnum, currentrownum-1] = new Tile((ETileType)tiletype - 48, currentcolnum, currentrownum-1);
+                    map[currentcolnum, currentrownum-1] = new Tile((ETileType)tiletype - 48, currentcolnum, currentrownum-1);
                     currentcolnum++;
                     // System.Diagnostics.Debug.WriteLine("Tile type: {0}, Coords, {1}, {2}", tiletype - 48, currentcolnum - 1 , currentrownum -1);
                 }
@@ -236,33 +236,33 @@ namespace MONOWar
             // Subtract the 
             if (tile.colplace != colnum - 1)
             {
-                returnlist.Add(Map[tile.colplace + 1, tile.rowplace]);
+                returnlist.Add(map[tile.colplace + 1, tile.rowplace]);
             }
 
             if ((tile.colplace != colnum - 1) && (tile.rowplace != 0))
             {
-                returnlist.Add(Map[tile.colplace + 1, tile.rowplace - 1]);
+                returnlist.Add(map[tile.colplace + 1, tile.rowplace - 1]);
 
             }
 
             if (tile.rowplace != 0)
             {
-                returnlist.Add(Map[tile.colplace, tile.rowplace - 1]);
+                returnlist.Add(map[tile.colplace, tile.rowplace - 1]);
             }
 
             if (tile.colplace != 0)
             {
-                returnlist.Add(Map[tile.colplace - 1, tile.rowplace]);
+                returnlist.Add(map[tile.colplace - 1, tile.rowplace]);
             }
 
             if ((tile.colplace != 0) && (tile.rowplace != rownum -1))
             {
-                returnlist.Add(Map[tile.colplace - 1, tile.rowplace + 1]);
+                returnlist.Add(map[tile.colplace - 1, tile.rowplace + 1]);
             }
 
             if (tile.rowplace != rownum - 1)
             {
-                returnlist.Add(Map[tile.colplace, tile.rowplace + 1]);
+                returnlist.Add(map[tile.colplace, tile.rowplace + 1]);
             }
 
             return returnlist;

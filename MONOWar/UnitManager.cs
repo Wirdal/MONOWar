@@ -29,7 +29,7 @@ namespace MONOWar
         // Holds all the units created
         List<Unit> units = new List<Unit>();
 
-        //Lists for seperate unit colors
+        // Lists for seperate unit colors
         // We add the sprites into the appropriate list when they are loaded.
         // 0 = Red
         // 1 = Blue
@@ -41,8 +41,8 @@ namespace MONOWar
         List<Texture2D>[] unitsColored = new List<Texture2D>[5];
 
         public static Unit SelectedUnit = null;
-        //Assuming that our spritesheet is a perfect square
 
+        // Info for our sprite sheets
         static Point FrameSize = new Point(32, 32);
         static Point CurrentFrame = new Point(0, 0);
         static Point SheetSize = new Point(2, 2);
@@ -71,7 +71,10 @@ namespace MONOWar
                 // Find out their texture and color? ^
                 int unitType = (int)unit.type;
                 int unitColor = (int)unit.color;
-                spriteBatch.Draw(unitsColored[unitColor][unitType], unit.currentTile.unitRectangle, new Rectangle(CurrentFrame.X * FrameSize.X, CurrentFrame.Y * FrameSize.Y, FrameSize.X, FrameSize.Y), Color.White);
+                spriteBatch.Draw(unitsColored[unitColor][unitType],
+                    unit.currentTile.unitRectangle, 
+                    new Rectangle(CurrentFrame.X * FrameSize.X, CurrentFrame.Y * FrameSize.Y, FrameSize.X, FrameSize.Y),
+                    Color.White);
             }
             spriteBatch.End();
         }

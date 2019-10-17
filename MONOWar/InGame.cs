@@ -21,6 +21,7 @@ namespace MONOWar
             graphicsDevice.Clear(Color.Aquamarine); //  The background image placeholder
             MapManager.publicInstance.DrawMap(spriteBatch);
             UnitManager.publicInstance.DrawUnits(spriteBatch);
+            UIManager.publicInstance.DrawUI(spriteBatch);
             // uiManager.Draw
         }
 
@@ -49,6 +50,8 @@ namespace MONOWar
             MapManager.publicInstance.Update(gameTime);
             // Update the units
             UnitManager.publicInstance.Update(gameTime);
+            // Update the UI, if required
+            UIManager.publicInstance.Update(gameTime);
 
         }
         private void HandleControls()

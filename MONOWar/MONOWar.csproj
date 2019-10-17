@@ -63,6 +63,7 @@
     <Compile Include="IGameState.cs" />
     <Compile Include="IGameObject.cs" />
     <Compile Include="GameStateManager.cs" />
+    <Compile Include="UIManager.cs" />
     <Compile Include="Units.cs" />
     <Compile Include="InGame.cs" />
     <Compile Include="MainMenu.cs" />
