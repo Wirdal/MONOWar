@@ -1,27 +1,163 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Text.RegularExpressions;
-using System.Collections.Generic;
-using System.IO;
+
+
 
 namespace MONOWar
 {
-    // Setting up
+    interface IManager
+    {
+        void Draw(SpriteBatch spriteBatch);
+        void Update(GameTime gameTime);
+
+    }
+    class GameStateManager
+    {
+        private static GameStateManager SprivateInstance = null;
+        // Going to store the game states within a stack
+        private Stack<GameState> screens = new Stack<GameState>();
+        private ContentManager content
+        {
+            get; set;
+        }
+
+        public Game gameInstance
+        {
+            get; set;
+        }
+        // Also a field, because I don't think I can pass it around too much
+        public static GameStateManager publicInstance
+        {
+            get
+            {
+                if (SprivateInstance == null)
+                {
+                    SprivateInstance = new GameStateManager();
+                }
+                return SprivateInstance;
+            }
+        }
+        public void SetContent(ContentManager content)
+        {
+            this.content = content;
+        }
+        public void AddScreen(GameState screen)
+        {
+            screens.Push(screen);
+            screens.Peek().Initialize(); //Init ti too
+            screens.Peek().LoadContent(content); //Pass it the content manager
+
+        }
+        public void RemoveScreen()
+        {
+            if (screens.Count() > 0)
+            {
+                screens.Pop();
+            }
+        }
+        public void ClearScreens()
+        {
+            while (screens.Count() > 0)
+            {
+                screens.Pop();
+            }
+        }
+        public void Update(GameTime gameTime)
+        {
+            if (screens.Count() > 0)
+            {
+                screens.Peek().Update(gameTime);
+            }
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (screens.Count() > 0)
+            {
+                screens.Peek().Draw(spriteBatch);
+            }
+        }
+        public void UnloadContent()
+        {
+            foreach (GameState screen in screens)
+            {
+                screen.UnloadContent();
+            }
+        }
+
+    }
+    class UIManager
+    {
+        private static UIManager SprivateInstance = null;
+        public static UIManager publicInstance
+        {
+            get
+            {
+                if (SprivateInstance == null)
+                {
+                    SprivateInstance = new UIManager();
+                }
+                return SprivateInstance;
+            }
+        }
+
+        public void DrawUI(SpriteBatch spriteBatch)
+        {
+            // Draw that UI, baby
+        }
+        public void Update(GameTime gameTime)
+        {
+            // Update data values within the UI
+
+        }
+
+    }
+    class FontManager
+    {
+        private static FontManager SprivateInstance = null;
+
+        public static FontManager publicInstance
+        {
+            get
+            {
+                if (SprivateInstance == null)
+                {
+                    SprivateInstance = new FontManager();
+                }
+                return SprivateInstance;
+            }
+        }
+
+
+        public SpriteFont menuBold;
+
+
+        public void LoadContent(ContentManager content)
+        {
+            menuBold = content.Load<SpriteFont>("Fonts/MenuBold");
+        }
+
+    }
     class MapManager
     {
-        private static MapManager PrivateInstance;
+        private static MapManager SprivateInstance;
         public static MapManager publicInstance
         {
             get
             {
-                if (PrivateInstance == null)
+                if (SprivateInstance == null)
                 {
-                    PrivateInstance = new MapManager();
+                    SprivateInstance = new MapManager();
                 }
-                return PrivateInstance;
+                return SprivateInstance;
             }
         }
 
@@ -140,7 +276,7 @@ namespace MONOWar
         public Tile FindClickedTile(MouseState mouse)
         {
             Tile returntile = null;
-            foreach(Tile tile in map)
+            foreach (Tile tile in map)
             {
                 if (tile.clickButton.CheckForHover(mouse))
                 {
@@ -157,7 +293,7 @@ namespace MONOWar
             // Open the map file
             // Lets read the map.
             System.Diagnostics.Debug.WriteLine(mapname);
-            string mapfile = File.ReadAllText("../../../../Maps/"+mapname+".map");
+            string mapfile = File.ReadAllText("../../../../Maps/" + mapname + ".map");
 
             System.Diagnostics.Debug.WriteLine("Map");
             // Find the tile amt. Construct a regex
@@ -213,9 +349,9 @@ namespace MONOWar
                 // Iterate through all the matches
                 Int32.TryParse(i.Groups["rownum"].Value, out currentrownum);
                 string tilelist = i.Groups["tiles"].Value;
-                foreach(int tiletype in tilelist)
+                foreach (int tiletype in tilelist)
                 {
-                    map[currentcolnum, currentrownum-1] = new Tile((ETileType)tiletype - 48, currentcolnum, currentrownum-1);
+                    map[currentcolnum, currentrownum - 1] = new Tile((ETileType)tiletype - 48, currentcolnum, currentrownum - 1);
                     currentcolnum++;
                     // System.Diagnostics.Debug.WriteLine("Tile type: {0}, Coords, {1}, {2}", tiletype - 48, currentcolnum - 1 , currentrownum -1);
                 }
@@ -255,7 +391,7 @@ namespace MONOWar
                 returnlist.Add(map[tile.colplace - 1, tile.rowplace]);
             }
 
-            if ((tile.colplace != 0) && (tile.rowplace != rownum -1))
+            if ((tile.colplace != 0) && (tile.rowplace != rownum - 1))
             {
                 returnlist.Add(map[tile.colplace - 1, tile.rowplace + 1]);
             }
@@ -270,6 +406,106 @@ namespace MONOWar
         public void Update(GameTime gameTime)
         {
 
+        }
+    }
+    class UnitManager
+    {
+        private static UnitManager SprivateInstance;
+        public static UnitManager publicInstance
+        {
+            get
+            {
+                if (SprivateInstance == null)
+                {
+                    SprivateInstance = new UnitManager();
+                }
+                return SprivateInstance;
+            }
+        }
+
+        public static Point SheetSize1 { get => SheetSize; set => SheetSize = value; }
+
+        // Holds all the units created
+        List<Unit> units = new List<Unit>();
+
+        // Lists for seperate unit colors
+        // We add the sprites into the appropriate list when they are loaded.
+        // 0 = Red
+        // 1 = Blue
+        // 2 = Green
+        // 3 = Yellow
+        // 4 = Purple
+        // In addition, the units themselves are in order in the list,according to enum Unit Type. Defined in Unit.cs
+        // 0 = Infantry
+        List<Texture2D>[] unitsColored = new List<Texture2D>[5];
+
+        public static Unit SelectedUnit = null;
+
+        // Info for our sprite sheets
+        static Point SframeSize = new Point(32, 32);
+        static Point ScurrentFrame = new Point(0, 0);
+        static Point SheetSize = new Point(2, 2);
+
+        const int MillisecondsPerFrame = 120;
+        int timeSinceLastFrame = 0;
+
+        public void CreateUnit(EUnitType type, EUnitColor color, Tile tile)
+        {
+            switch (type)
+            {
+                case EUnitType.Infantry:
+                    units.Add(new Infantry(color, tile));
+                    break;
+                default:
+                    break;
+
+            }
+        }
+        public void DrawUnits(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin();
+            foreach (Unit unit in units)
+            {
+
+                // Find out their texture and color? ^
+                int unitType = (int)unit.type;
+                int unitColor = (int)unit.color;
+                spriteBatch.Draw(unitsColored[unitColor][unitType],
+                    unit.currentTile.unitRectangle,
+                    new Rectangle(ScurrentFrame.X * SframeSize.X, ScurrentFrame.Y * SframeSize.Y, SframeSize.X, SframeSize.Y),
+                    Color.White);
+            }
+            spriteBatch.End();
+        }
+        public void LoadContent(ContentManager content)
+        {
+            // Load the red unit sprites and construct the list the will preside in.
+            unitsColored[0] = new List<Texture2D>();
+            unitsColored[0].Add(content.Load<Texture2D>("Sprites/Units/Red/Infantry"));
+            // Load the blue
+            // ...
+        }
+        public void ClearUnits()
+        {
+            units.Clear();
+        }
+        public void Update(GameTime gameTime)
+        {
+            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            if (timeSinceLastFrame > MillisecondsPerFrame)
+            {
+                timeSinceLastFrame -= MillisecondsPerFrame;
+                ScurrentFrame.X++;
+                if (ScurrentFrame.X >= SheetSize1.X)
+                {
+                    ScurrentFrame.X = 0;
+                    ScurrentFrame.Y++;
+                    if (ScurrentFrame.Y >= SheetSize1.Y)
+                    {
+                        ScurrentFrame.Y = 0;
+                    }
+                }
+            }
         }
     }
 }
