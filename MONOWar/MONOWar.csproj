@@ -58,21 +58,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Buttons.cs" />
-    <Compile Include="FontManager.cs" />
     <Compile Include="MapSelect.cs" />
     <Compile Include="IGameState.cs" />
     <Compile Include="IGameObject.cs" />
-    <Compile Include="GameStateManager.cs" />
-    <Compile Include="UIManager.cs" />
+    <Compile Include="Managers.cs" />
     <Compile Include="Units.cs" />
     <Compile Include="InGame.cs" />
     <Compile Include="MainMenu.cs" />
-    <Compile Include="Game1.cs" />
-    <Compile Include="MapManager.cs" />
+    <Compile Include="MONOWar.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tile.cs" />
-    <Compile Include="UnitManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
