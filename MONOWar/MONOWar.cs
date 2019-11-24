@@ -27,9 +27,12 @@ namespace MONOWar
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            // Let's create the main menu screen here
+            // Set up gamestate manager with information
             GameStateManager.publicInstance.SetContent(Content);
             GameStateManager.publicInstance.gameInstance = this;
+            GameStateManager.publicInstance.window = new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferWidth);
+
+            // Let's create the main menu screen here
             IsMouseVisible = true;
             MainMenu mainScreen = new MainMenu(graphics.GraphicsDevice);
             GameStateManager.publicInstance.AddScreen(mainScreen);
@@ -48,6 +51,7 @@ namespace MONOWar
             MapManager.publicInstance.LoadContent(Content);
             UnitManager.publicInstance.LoadContent(Content);
             FontManager.publicInstance.LoadContent(Content);
+            UIManager.publicInstance.LoadContent(Content);
         }
 
         /// <summary>

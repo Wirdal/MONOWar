@@ -14,11 +14,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MONOWar
 {
-    interface IManager
+    interface IManagers
     {
         void Draw(SpriteBatch spriteBatch);
         void Update(GameTime gameTime);
-
+        void LoadContent(ContentManager content);
     }
     class GameStateManager
     {
@@ -29,6 +29,8 @@ namespace MONOWar
         {
             get; set;
         }
+
+        public Rectangle window;
 
         public Game gameInstance
         {
@@ -96,6 +98,21 @@ namespace MONOWar
     }
     class UIManager
     {
+        Texture2D steelBG;
+
+        // Figure out exactly where we draw our resource window
+        private Rectangle resourceArea;
+        private Rectangle portraitArea;
+
+
+        //
+        private Texture2D ChadPortrait;
+
+        // UI state. 
+        public int state;
+
+        // Same for other elements
+
         private static UIManager SprivateInstance = null;
         public static UIManager publicInstance
         {
@@ -108,17 +125,43 @@ namespace MONOWar
                 return SprivateInstance;
             }
         }
-
         public void DrawUI(SpriteBatch spriteBatch)
         {
             // Draw that UI, baby
+            spriteBatch.Begin();
+            // The corner box, along with the relevant info
+            spriteBatch.Draw(steelBG, resourceArea, Color.White);
+            spriteBatch.Draw(ChadPortrait, portraitArea, Color.White);
+            Player currentPlayer = MapManager.ScurrentPlayer;
+            // Draw their resources
+            // Draw the portrait
+            spriteBatch.End();
         }
         public void Update(GameTime gameTime)
         {
-            // Update data values within the UI
+            // Update data values within the UI, to make sure it will get redrawn in an anchored spot
+            UpdateAreas();
 
         }
+        public void LoadContent(ContentManager content)
+        {
+            // Load all the UI elements
+            steelBG = content.Load<Texture2D>("UI/Steel");
+            ChadPortrait = content.Load <Texture2D>("UI/Commanders/test");
+            // Load portraits
+        }
+        void UpdateAreas()
+        {
+            Rectangle temptangle = GameStateManager.publicInstance.window;
+            int tempwidth = temptangle.Width / 3;
+            int tempheight = temptangle.Height / 8;
 
+            int tempx = temptangle.Width - tempwidth;
+            int tempy = 0;
+
+            resourceArea = new Rectangle(tempx, tempy, tempwidth, tempheight);
+            portraitArea = new Rectangle(tempx, tempy, tempwidth / 2, tempheight);
+        }
     }
     class FontManager
     {
@@ -180,12 +223,12 @@ namespace MONOWar
         public int cameraY = 0;
 
         // Selection variable
-        public static Tile SelectedTile = null;
-
-
+        public static Tile SselectedTile = null;
         private List<Texture2D> tileSprites = new List<Texture2D>();
-
-        // private Player[] Players; //  Want to know who is playing on the map
+        // Player info
+        private int playerAmt;
+        public static Player ScurrentPlayer = null;
+        public List<Player> players; //  Want to know who is playing on the map
 
         //Textures;
         Texture2D orang;
@@ -296,6 +339,17 @@ namespace MONOWar
             string mapfile = File.ReadAllText("../../../../Maps/" + mapname + ".map");
 
             System.Diagnostics.Debug.WriteLine("Map");
+            Regex PlayerAMTRX = new Regex(@"^(?:players)\s*=\s*(?<val>\d*)\s*$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            Match PlayerMatch = PlayerAMTRX.Match(mapfile);
+            if (!PlayerMatch.Success)
+            {
+                System.Diagnostics.Debug.WriteLine("No Playeramt found");
+
+            }
+            else
+            {
+                Int32.TryParse(PlayerMatch.Groups["val"].Value, out playerAmt);
+            }
             // Find the tile amt. Construct a regex
             Regex TileAMTRX = new Regex(@"^(?:tileamt)\s*=\s*(?<val>\d*)\s*$", RegexOptions.IgnoreCase | RegexOptions.Multiline);
             Match TileMatch = TileAMTRX.Match(mapfile);
@@ -423,7 +477,6 @@ namespace MONOWar
             }
         }
 
-        public static Point SheetSize1 { get => SheetSize; set => SheetSize = value; }
 
         // Holds all the units created
         List<Unit> units = new List<Unit>();
@@ -444,9 +497,9 @@ namespace MONOWar
         // Info for our sprite sheets
         static Point SframeSize = new Point(32, 32);
         static Point ScurrentFrame = new Point(0, 0);
-        static Point SheetSize = new Point(2, 2);
+        static Point SsheetSize = new Point(2, 2);
 
-        const int MillisecondsPerFrame = 120;
+        const int CmillisecondsPerFrame = 120;
         int timeSinceLastFrame = 0;
 
         public void CreateUnit(EUnitType type, EUnitColor color, Tile tile)
@@ -492,15 +545,15 @@ namespace MONOWar
         public void Update(GameTime gameTime)
         {
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-            if (timeSinceLastFrame > MillisecondsPerFrame)
+            if (timeSinceLastFrame > CmillisecondsPerFrame)
             {
-                timeSinceLastFrame -= MillisecondsPerFrame;
+                timeSinceLastFrame -= CmillisecondsPerFrame;
                 ScurrentFrame.X++;
-                if (ScurrentFrame.X >= SheetSize1.X)
+                if (ScurrentFrame.X >= SsheetSize.X)
                 {
                     ScurrentFrame.X = 0;
                     ScurrentFrame.Y++;
-                    if (ScurrentFrame.Y >= SheetSize1.Y)
+                    if (ScurrentFrame.Y >= SsheetSize.Y)
                     {
                         ScurrentFrame.Y = 0;
                     }

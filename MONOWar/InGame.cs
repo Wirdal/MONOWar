@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
 namespace MONOWar
 {
     class InGame : GameState
@@ -85,7 +84,7 @@ namespace MONOWar
                 {
                     clickedtile.OnClick();
                     // System.Diagnostics.Debug.WriteLine("Xpos {0} Ypos {1}", clickedtile.colplace, clickedtile.rowplace);
-                    MapManager.SelectedTile = clickedtile;
+                    MapManager.SselectedTile = clickedtile;
                     if (clickedtile.currentUnit != null)
                     {
                         UnitManager.SelectedUnit = clickedtile.currentUnit;

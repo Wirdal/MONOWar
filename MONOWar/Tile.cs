@@ -70,7 +70,7 @@ namespace MONOWar
             // What happens when I click on the tile?
             // Will want to display information about the tile
             // As well as info about our unit
-            MapManager.SelectedTile = this;
+            MapManager.SselectedTile = this;
             if (currentUnit != null)
             {
                 // Also display info about the unit
